@@ -27,6 +27,7 @@ app.use('/users', usersRouter);
 app.post('/movies', movies.addMovie);
 app.get('/movies', movies.findAll);
 app.get('/movies/getTotalVotes', movies.getAllVotes);
+app.get('/movies/pickRandomMovie', movies.pickRandomMovie);
 app.get('/movies/:id', movies.findOne);
 app.put('/movies/:id/vote', movies.incrementUpvotes);
 app.delete('/movies/:id/remove', movies.deleteMovie);

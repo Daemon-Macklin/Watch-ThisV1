@@ -86,17 +86,27 @@ router.getAllVotes = (req, res) =>{
     res.json(votes);
 };
 
+router.pickRandomMovie = (req, res) =>{
+    let movie = randomMovie(movies);
+    res.json(movie)
+};
+
+function randomMovie(array) {
+    let i = Math.floor((Math.random() * movies.length));
+    return movies[i];
+};
+
 function getTotalVotes(array){
     let totalVotes = 0;
     array.forEach(function (obj){totalVotes += obj.upvotes;});
     return totalVotes
 
-}
+};
 
 function getByValue(array, id) {
     var result  = array.filter(function(obj){return obj.id == id;} );
     return result ? result[0] : null; // or undefined
-}
+};
 
 
 module.exports = router;
