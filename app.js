@@ -25,9 +25,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.post('/movies', movies.addMovie);
-app.put('movies/:id/vote', movies.incrementUpvotes);
 app.get('/movies', movies.findAll);
+app.get('/movies/getTotalVotes', movies.getAllVotes);
 app.get('/movies/:id', movies.findOne);
+app.put('/movies/:id/vote', movies.incrementUpvotes);
+app.delete('/movies/:id/remove', movies.deleteMovie);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

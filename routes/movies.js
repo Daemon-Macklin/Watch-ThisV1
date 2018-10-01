@@ -49,8 +49,49 @@ router.incrementUpvotes = (req, res) => {
     // Find the relevant donation based on params id passed in
     // Add 1 to upvotes property of the selected donation based on its id
     var movie = getByValue(movies,req.params.id);
+    const currentupvotes = movie.upvotes;
     movie.upvotes += 1;
+
+    if(movie.upvotes > currentupvotes){
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(movie,null,5));
+        res.json(movie);
+    }
 };
+
+router.deleteMovie = (req, res) => {
+    //Delete the selected donation based on its id
+    movie = getByValue(movies, req.params.id)
+    // First, find the relevant donation to delete
+    // Next, find it's position in the list of donations
+    let isDelete = false;
+    for(let i =0; i < movies.length; i += 1){
+        if(movie === movies[i]){
+            movies.splice(i,1);
+            isDelete = true;
+            break
+        }
+    }
+    // Then use donations.splice(index, 1) to remove it from the list
+    if(!isDelete){
+        res.json("Item not removed")
+    }else{
+        res.json("Item removed")
+    }
+    // Return a message to reflect success or failure of delete operation
+};
+
+router.getAllVotes = (req, res) =>{
+    let votes = getTotalVotes(movies);
+    res.json(votes);
+};
+
+function getTotalVotes(array){
+    let totalVotes = 0;
+    array.forEach(function (obj){totalVotes += obj.upvotes;});
+    return totalVotes
+
+}
 
 function getByValue(array, id) {
     var result  = array.filter(function(obj){return obj.id == id;} );
