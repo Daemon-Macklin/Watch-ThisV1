@@ -1,48 +1,60 @@
 let movies = require('../models/movies');
 let express = require('express');
+let Movie = require('../models/movies');
 let router = express.Router();
-
 router.findAll = (req, res) => {
     // Return a JSON representation of our list
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(movies,null,5));
-    res.json(movies);
+
+    movies.find(function(err, movies) {
+        if (err)
+            res.send(err);
+
+        res.send(JSON.stringify(movies,null,5));
+    });
 };
 
 router.findOne = (req, res) => {
-const movie = getByValue(movies, req.params.id);
-// Create a donation variable and use the helper function
-// to find
-// req.params.id
-// in our donations array
-if(movie!=null){
+
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(movie,null,5));
-    res.json(movie);
-}else{
-    res.json('Movie not found');
-}
-// Then either return the found donation
-// or a suitable error message
+
+    Movie.find({ "_id" : req.params.id },function(err, movie) {
+        if (err)
+         res.send(JSON.stringify(err));
+        else
+        res.send(JSON.stringify(movie,null,5))
+    });
 };
 
+let mongoose = require('mongoose');
+
+
+
+mongoose.connect('mongodb://localhost:27017/movies');
+
+let db = mongoose.connection;
+
+db.on('error', function (err) {
+    console.log('Unable to Connect to [ ' + db.name + ' ]', err);
+});
+
+db.once('open', function () {
+    console.log('Successfully Connected to [ ' + db.name + ' ]');
+});
+
 router.addMovie = (req, res) => {
-    //Add a new donation to our list
-    var id = Math.floor((Math.random() * 1000000) + 1); //Randomly generate an id
-    // parameters to store
-    // id (for id)
-    // req.body.paymenttype (for paymenttype)
-    // req.body.amount (for amount)
-    // 0 (for upvotes)
-    const movie = {id : id, type : req.body.type, title: req.body.title, genre: req.body.genre,  upvotes: 0};
-    var currentSize = movies.length;
 
-    movies.push(movie);
+    let movie = new Movie();
+     movie.type = req.params.type;
+     movie.title = req.params.title;
+     movie.genre = req.params.genre;
 
-    if((currentSize + 1) == movies.length)
-        res.json({ message: 'Movie Added!'});
-    else
-        res.json({ message: 'Movie NOT Added!'});
+    movie.save(function(err) {
+        if (err)
+        res.send(JSON.stringify(err));
+        else
+        res.send(JSON.stringify(movie));
+    });
 };
 
 router.incrementUpvotes = (req, res) => {
@@ -104,7 +116,7 @@ function getTotalVotes(array){
 };
 
 function getByValue(array, id) {
-    var result  = array.filter(function(obj){return obj.id == id;} );
+    let result  = array.filter(function(obj){return obj.id == id;} );
     return result ? result[0] : null; // or undefined
 };
 
