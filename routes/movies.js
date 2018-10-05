@@ -45,9 +45,9 @@ db.once('open', function () {
 router.addMovie = (req, res) => {
 
     let movie = new Movie();
-     movie.type = req.params.type;
-     movie.title = req.params.title;
-     movie.genre = req.params.genre;
+     movie.type = req.body.type;
+     movie.title = req.body.title;
+     movie.genre = req.body.genre;
 
     movie.save(function(err) {
         if (err)
@@ -58,54 +58,56 @@ router.addMovie = (req, res) => {
 };
 
 router.incrementUpvotes = (req, res) => {
-    // Find the relevant donation based on params id passed in
-    // Add 1 to upvotes property of the selected donation based on its id
-    var movie = getByValue(movies,req.params.id);
-    const currentupvotes = movie.upvotes;
-    movie.upvotes += 1;
 
-    if(movie.upvotes > currentupvotes){
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(movie,null,5));
-        res.json(movie);
-    }
+    Movie.findById(req.params.id, function(err,donation) {
+        if (err)
+         res.send(JSON.stringify(err));
+        else {
+            donation.upvotes += 1;
+            donation.save(function (err) {
+                if (err)
+                 res.send(JSON.stringify(err));
+                else
+                 res.send(JSON.stringify(donation));
+            });
+        }
+    });
 };
 
 router.deleteMovie = (req, res) => {
-    //Delete the selected donation based on its id
-    movie = getByValue(movies, req.params.id)
-    // First, find the relevant donation to delete
-    // Next, find it's position in the list of donations
-    let isDelete = false;
-    for(let i =0; i < movies.length; i += 1){
-        if(movie === movies[i]){
-            movies.splice(i,1);
-            isDelete = true;
-            break
-        }
-    }
-    // Then use donations.splice(index, 1) to remove it from the list
-    if(!isDelete){
-        res.json("Item not removed")
-    }else{
-        res.json("Item removed")
-    }
-    // Return a message to reflect success or failure of delete operation
+    Movie.findByIdAndRemove(req.params.id, function(err) {
+        if (err)
+            res.send(JSON.stringify(err));
+        else
+            res.send(req.params.id + " Removed")
+    });
 };
 
 router.getAllVotes = (req, res) =>{
-    let votes = getTotalVotes(movies);
-    res.json(votes);
+    let totalvotes;
+    Movie.find(function(err, movies) {
+        if (err)
+            res.send(JSON.stringify(err));
+        else
+            totalvotes = getTotalVotes(movies);
+            res.send("Total Votes: " + totalvotes);
+    });
 };
 
 router.pickRandomMovie = (req, res) =>{
-    let movie = randomMovie(movies);
-    res.json(movie)
+    let movie;
+    Movie.find(function (err,movies) {
+        if(err)
+            res.send(JSON.stringify(err));
+        else
+            movie = randomMovie(movies);
+            res.json(movie)
+    });
 };
 
 function randomMovie(array) {
-    let i = Math.floor((Math.random() * movies.length));
-    return movies[i];
+    let i = Math.floor((Math.random() * array.length));
+    return array[i];
 };
 
 function getTotalVotes(array){
