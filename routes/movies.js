@@ -1,7 +1,29 @@
 let movies = require('../models/movies');
 let express = require('express');
 let Movie = require('../models/movies');
+let mongodbUri = "//mongodb://<>:<>@ds149855.mlab.com:49855/movies";
+//mongodb://<DMacklin>:<DMacklin123>@ds149855.mlab.com:49855/movies
 let router = express.Router();
+let mongoose = require('mongoose');
+
+mongoose.connect(mongodbUri);
+let db = mongoose.connection;
+db.on('error', function (err) {
+    console.log('Unable to Connect to [ ' + db.name + ' ]', err);
+});
+
+db.once('open', function () {
+    console.log('Successfully Connected to [ ' + db.name + ' ]');
+});
+
+
+
+//----------------------------------------------//
+//---------------Router Functions---------------//
+//----------------------------------------------//
+
+
+//Method to find all Movies
 router.findAll = (req, res) => {
     // Return a JSON representation of our list
     res.setHeader('Content-Type', 'application/json');
@@ -14,6 +36,7 @@ router.findAll = (req, res) => {
     });
 };
 
+//Method to find one movie
 router.findOne = (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
@@ -26,22 +49,7 @@ router.findOne = (req, res) => {
     });
 };
 
-let mongoose = require('mongoose');
-
-
-
-mongoose.connect('mongodb://localhost:27017/movies');
-
-let db = mongoose.connection;
-
-db.on('error', function (err) {
-    console.log('Unable to Connect to [ ' + db.name + ' ]', err);
-});
-
-db.once('open', function () {
-    console.log('Successfully Connected to [ ' + db.name + ' ]');
-});
-
+// Method to add a movie to the database
 router.addMovie = (req, res) => {
 
     let movie = new Movie();
@@ -57,6 +65,7 @@ router.addMovie = (req, res) => {
     });
 };
 
+//Method to add an upvote to a movie
 router.incrementUpvotes = (req, res) => {
 
     Movie.findById(req.params.id, function(err,donation) {
@@ -74,6 +83,7 @@ router.incrementUpvotes = (req, res) => {
     });
 };
 
+//Method to delete a movie
 router.deleteMovie = (req, res) => {
     Movie.findByIdAndRemove(req.params.id, function(err) {
         if (err)
@@ -83,6 +93,7 @@ router.deleteMovie = (req, res) => {
     });
 };
 
+//Method to get the number of upvotes on all movies
 router.getAllVotes = (req, res) =>{
     let totalvotes;
     Movie.find(function(err, movies) {
@@ -94,6 +105,7 @@ router.getAllVotes = (req, res) =>{
     });
 };
 
+//Method that will randomly recomend a movie for the user
 router.pickRandomMovie = (req, res) =>{
     let movie;
     Movie.find(function (err,movies) {
@@ -105,11 +117,18 @@ router.pickRandomMovie = (req, res) =>{
     });
 };
 
+//----------------------------------------------//
+//---------------Helper Functions---------------//
+//----------------------------------------------//
+
+
+//Helper function for random movie picker
 function randomMovie(array) {
     let i = Math.floor((Math.random() * array.length));
     return array[i];
 };
 
+//Helper function for getting total upvotes
 function getTotalVotes(array){
     let totalVotes = 0;
     array.forEach(function (obj){totalVotes += obj.upvotes;});
@@ -117,10 +136,13 @@ function getTotalVotes(array){
 
 };
 
+
+/*
 function getByValue(array, id) {
     let result  = array.filter(function(obj){return obj.id == id;} );
     return result ? result[0] : null; // or undefined
 };
+*/
 
 
 module.exports = router;
