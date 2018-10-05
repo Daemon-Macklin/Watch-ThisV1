@@ -2,7 +2,6 @@ let movies = require('../models/movies');
 let express = require('express');
 let Movie = require('../models/movies');
 let mongodbUri = "//mongodb://<>:<>@ds149855.mlab.com:49855/movies";
-//mongodb://<DMacklin>:<DMacklin123>@ds149855.mlab.com:49855/movies
 let router = express.Router();
 let mongoose = require('mongoose');
 
