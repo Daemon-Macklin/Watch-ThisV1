@@ -1,7 +1,7 @@
 let movies = require('../models/movies');
 let express = require('express');
 let Movie = require('../models/movies');
-let mongodbUri = "//mongodb://<>:<>@ds149855.mlab.com:49855/movies";
+let mongodbUri = "mongodb://:@ds149855.mlab.com:49855/movies";
 let router = express.Router();
 let mongoose = require('mongoose');
 
@@ -60,23 +60,28 @@ router.addMovie = (req, res) => {
         if (err)
         res.send(JSON.stringify(err));
         else
-        res.send(JSON.stringify(movie));
+        res.send(JSON.stringify(movie,null,5));
     });
 };
 
 //Method to add an upvote to a movie
 router.incrementUpvotes = (req, res) => {
 
-    Movie.findById(req.params.id, function(err,donation) {
+    Movie.findById(req.params.id, function(err,movie) {
         if (err)
          res.send(JSON.stringify(err));
         else {
-            donation.upvotes += 1;
-            donation.save(function (err) {
+            for(let i =0; i < movie.reviews.length; i+=1){
+                if(movie.reviews[i]._id.equals(req.params.reviewId)){
+                    movie.reviews[i].upvotes +=1;
+                    break;
+                }
+            }
+            movie.save(function (err) {
                 if (err)
                  res.send(JSON.stringify(err));
                 else
-                 res.send(JSON.stringify(donation));
+                 res.send(JSON.stringify(movie,null,5));
             });
         }
     });
@@ -112,7 +117,54 @@ router.pickRandomMovie = (req, res) =>{
             res.send(JSON.stringify(err));
         else
             movie = randomMovie(movies);
-            res.json(movie)
+            res.send(JSON.stringify(movie,null,5));
+    });
+};
+
+//Method to add review to movie
+router.addReview = (req, res) =>{
+
+    Movie.findByIdAndUpdate(req.params.id,
+        {$push: {reviews: {review : req.body.reviewText, score : req.body.score}}},
+        function(err,movie) {
+        if (err)
+            res.send(JSON.stringify(err));
+        else {
+            movie.rating = updateScore(movie.reviews, req.body.score);
+            movie.save(function (err) {
+                if (err)
+                    res.send(JSON.stringify(err));
+                else
+                    res.send(JSON.stringify(movie));
+            })
+        }
+    });
+};
+
+//Method to delete review
+router.deleteReview = (req,res) =>{
+    Movie.findById(req.params.id, function (err, movie) {
+        if(err)
+            res.send(JSON.stringify(err));
+        else{
+            let isDeleted = false;
+            for(let i =0; i < movie.reviews.length; i +=1){
+                //console.log(movie.reviews[i]._id + " : " + req.params.reviewId);
+                if(movie.reviews[i]._id.equals(req.params.reviewId)){
+                    movie.reviews.splice(i, 1);
+                    movie.save(function (err) {
+                        if(err)
+                            res.send(JSON.stringify(err));
+                        else
+                            res.send(JSON.stringify(movie,null,5))
+                    });
+                    isDeleted = true;
+                    break;
+                }
+            }
+            if(!isDeleted)
+                res.send("Review not found");
+        }
     });
 };
 
@@ -120,20 +172,30 @@ router.pickRandomMovie = (req, res) =>{
 //---------------Helper Functions---------------//
 //----------------------------------------------//
 
+//Helper function to update movie score
+function updateScore(array, newScore) {
+    let totalScore = 0;
+    for(let i = 0; i < array.length; i+=1 ){
+        totalScore += array[i].score;
+    }
+    let size = array.length +=1;
+    let total = totalScore + newScore;
+    let final = Math.round((total/size) * 100) / 100;
+    return final;
+}
 
 //Helper function for random movie picker
 function randomMovie(array) {
     let i = Math.floor((Math.random() * array.length));
     return array[i];
-};
+}
 
 //Helper function for getting total upvotes
 function getTotalVotes(array){
     let totalVotes = 0;
     array.forEach(function (obj){totalVotes += obj.upvotes;});
     return totalVotes
-
-};
+}
 
 
 /*

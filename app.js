@@ -1,6 +1,7 @@
-//HTTP REQUEST = GET
-//ROUTE PATH = '/donations/:id'
-
+/**
+ * Daemon Macklin
+ *
+ */
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -26,8 +27,11 @@ app.get('/movies', movies.findAll);
 app.get('/movies/getTotalVotes', movies.getAllVotes);
 app.get('/movies/pickRandomMovie', movies.pickRandomMovie);
 app.get('/movies/:id', movies.findOne);
-app.put('/movies/:id/vote', movies.incrementUpvotes);
-app.delete('/movies/:id/remove', movies.deleteMovie);
+app.delete('/movies/:id/removeMovie', movies.deleteMovie);
+app.post('/movies/:id/addReview', movies.addReview);
+app.delete('/movies/:id/removeReview/:reviewId', movies.deleteReview);
+app.put('/movies/:id/upvoteReview/:reviewId', movies.incrementUpvotes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
