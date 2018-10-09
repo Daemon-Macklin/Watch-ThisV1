@@ -30,7 +30,7 @@ router.findAll = (req, res) => {
     movies.find(function(err, movies) {
         if (err)
             res.send(err);
-
+        else
         res.send(JSON.stringify(movies,null,5));
     });
 };
@@ -168,6 +168,46 @@ router.deleteReview = (req,res) =>{
     });
 };
 
+//Method to search movies based on genre
+router.searchByGenre = (req, res) => {
+    let found = [];
+    movies.find(function(err, movies) {
+        if (err)
+            res.send(err);
+        else
+            for(let i =0; i < movies.length; i+=1){
+                if(movies[i].genre === req.params.genre){
+                    found.push(movies[i]);
+                }
+            }
+            if(found.length >= 1){
+                res.send(JSON.stringify(found,null,5));
+            }else {
+                res.send("No movies found");
+            }
+    });
+};
+
+//Method to search movies based on rating
+router.searchByRating = (req, res) => {
+    let found = [];
+    movies.find(function(err, movies) {
+        if (err)
+            res.send(err);
+        else
+            for(let i =0; i < movies.length; i+=1){
+                console.log(movies[i].rating + " : " + req.params.rating);
+                if(Number(movies[i].rating) >= Number(req.params.rating)){
+                    found.push(movies[i]);
+                }
+            }
+        if(found.length >= 1){
+            res.send(JSON.stringify(found,null,5));
+        }else {
+            res.send("No movies found");
+        }
+    });
+};
 //----------------------------------------------//
 //---------------Helper Functions---------------//
 //----------------------------------------------//
