@@ -22,7 +22,7 @@ db.once('open', function () {
 //----------------------------------------------//
 
 
-//Method to find all Movies
+//Method to find all Movies and Games
 router.findAll = (req, res) => {
     // Return a JSON representation of our list
     res.setHeader('Content-Type', 'application/json');
@@ -48,7 +48,7 @@ router.findOne = (req, res) => {
     });
 };
 
-// Method to add a movie to the database
+// Method to add a movie or game to the database
 router.addMedia = (req, res) => {
 
     let media = new Media();
@@ -64,7 +64,7 @@ router.addMedia = (req, res) => {
     });
 };
 
-//Method to add an upvote to a movie
+//Method to add an upvote to a review
 router.incrementUpvotes = (req, res) => {
 
     Media.findById(req.params.id, function(err,media) {
@@ -87,7 +87,7 @@ router.incrementUpvotes = (req, res) => {
     });
 };
 
-//Method to delete a movie
+//Method to delete a movie or game
 router.deleteMedia = (req, res) => {
     Media.findByIdAndRemove(req.params.id, function(err) {
         if (err)
@@ -109,7 +109,7 @@ router.getAllVotes = (req, res) =>{
     });
 };
 
-//Method that will randomly recomend a movie for the user
+//Method that will randomly recommend a movie or game for the user
 router.pickRandomMedia = (req, res) =>{
     let foundMedia =[];
     Media.find(function(err, media) {
@@ -130,6 +130,7 @@ router.pickRandomMedia = (req, res) =>{
     });
 };
 
+//Method to find all Movie OR Games depending on user input
 router.findAllType = (req, res) =>{
     let foundMedia =[];
     Media.find(function(err, media) {
@@ -149,6 +150,7 @@ router.findAllType = (req, res) =>{
         }
     });
 };
+
 //Method to add review to movie
 router.addReview = (req, res) =>{
 
@@ -233,6 +235,43 @@ router.searchByRating = (req, res) => {
             res.send(JSON.stringify(found,null,5));
         }else {
             res.send("No media found");
+        }
+    });
+};
+
+router.searchByTitle = (req,res) =>{
+    let found = [];
+    media.find(function(err, medias) {
+        if (err)
+            res.send(err);
+        else {
+            for (let i = 0; i < medias.length; i += 1) {
+                if (medias[i].title === req.params.title) {
+                    found.push(medias[i]);
+                }
+            }
+            for (let i = 1; i < 4; i += 1) {
+                let title = req.params.title.slice(0, i);
+                for (let j = 0; j < medias.length; j += 1) {
+                    let foundTitle = medias[j].title.slice(0, i);
+                    if (title === foundTitle) {
+                        let alreadyFound = false;
+                        for (let k = 0; k < found.length; k += 1) {
+                            if (medias[j].equals(found[k])) {
+                                alreadyFound = true;
+                            }
+                        }
+                        if (!alreadyFound) {
+                            found.push(medias[j])
+                        }
+                    }
+                }
+            }
+            if (found.length >= 1) {
+                res.send(JSON.stringify(found, null, 5));
+            } else {
+                res.send("No media found");
+            }
         }
     });
 };
