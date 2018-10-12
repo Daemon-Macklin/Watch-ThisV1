@@ -9,7 +9,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const movies = require('./routes/movies');
+const media = require('./routes/media');
 var app = express();
 
 // view engine setup
@@ -22,17 +22,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.post('/movies', movies.addMovie);
-app.get('/movies', movies.findAll);
-app.get('/movies/getTotalVotes', movies.getAllVotes);
-app.get('/movies/pickRandomMovie', movies.pickRandomMovie);
-app.get('/movies/searchByGenre/:genre', movies.searchByGenre);
-app.get('/movies/:id', movies.findOne);
-app.get('/movies/searchByRating/:rating', movies.searchByRating);
-app.delete('/movies/:id/removeMovie', movies.deleteMovie);
-app.post('/movies/:id/addReview', movies.addReview);
-app.delete('/movies/:id/removeReview/:reviewId', movies.deleteReview);
-app.put('/movies/:id/upvoteReview/:reviewId', movies.incrementUpvotes);
+app.post('/media', media.addMedia);
+app.get('/media', media.findAll);
+app.get('/media/getTotalVotes', media.getAllVotes);
+app.get('/media/searchByType/:type', media.findAllType);
+app.get('/media/:type/pickRandomMedia', media.pickRandomMedia);
+app.get('/media/searchByGenre/:genre', media.searchByGenre);
+app.get('/media/:id', media.findOne);
+app.get('/media/searchByRating/:rating', media.searchByRating);
+app.delete('/media/:id/removeMedia', media.deleteMedia);
+app.post('/media/:id/addReview', media.addReview);
+app.delete('/media/:id/removeReview/:reviewId', media.deleteReview);
+app.put('/media/:id/upvoteReview/:reviewId', media.incrementUpvotes);
 
 
 // catch 404 and forward to error handler

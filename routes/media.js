@@ -1,6 +1,6 @@
-let movies = require('../models/movies');
+let media = require('../models/media');
 let express = require('express');
-let Movie = require('../models/movies');
+let Media = require('../models/media');
 let mongodbUri = "mongodb://:@ds149855.mlab.com:49855/movies";
 let router = express.Router();
 let mongoose = require('mongoose');
@@ -27,69 +27,69 @@ router.findAll = (req, res) => {
     // Return a JSON representation of our list
     res.setHeader('Content-Type', 'application/json');
 
-    movies.find(function(err, movies) {
+    media.find(function(err, media) {
         if (err)
             res.send(err);
         else
-        res.send(JSON.stringify(movies,null,5));
+        res.send(JSON.stringify(media,null,5));
     });
 };
 
-//Method to find one movie
+//Method to find one movie or game
 router.findOne = (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
 
-    Movie.find({ "_id" : req.params.id },function(err, movie) {
+    Media.find({ "_id" : req.params.id },function(err, media) {
         if (err)
          res.send(JSON.stringify(err));
         else
-        res.send(JSON.stringify(movie,null,5))
+        res.send(JSON.stringify(media,null,5))
     });
 };
 
 // Method to add a movie to the database
-router.addMovie = (req, res) => {
+router.addMedia = (req, res) => {
 
-    let movie = new Movie();
-     movie.type = req.body.type;
-     movie.title = req.body.title;
-     movie.genre = req.body.genre;
+    let media = new Media();
+     media.type = req.body.type;
+     media.title = req.body.title;
+     media.genre = req.body.genre;
 
-    movie.save(function(err) {
+    media.save(function(err) {
         if (err)
         res.send(JSON.stringify(err));
         else
-        res.send(JSON.stringify(movie,null,5));
+        res.send(JSON.stringify(media,null,5));
     });
 };
 
 //Method to add an upvote to a movie
 router.incrementUpvotes = (req, res) => {
 
-    Movie.findById(req.params.id, function(err,movie) {
+    Media.findById(req.params.id, function(err,media) {
         if (err)
          res.send(JSON.stringify(err));
         else {
-            for(let i =0; i < movie.reviews.length; i+=1){
-                if(movie.reviews[i]._id.equals(req.params.reviewId)){
-                    movie.reviews[i].upvotes +=1;
+            for(let i =0; i < media.reviews.length; i+=1){
+                if(media.reviews[i]._id.equals(req.params.reviewId)){
+                    media.reviews[i].upvotes +=1;
                     break;
                 }
             }
-            movie.save(function (err) {
+            media.save(function (err) {
                 if (err)
                  res.send(JSON.stringify(err));
                 else
-                 res.send(JSON.stringify(movie,null,5));
+                 res.send(JSON.stringify(media,null,5));
             });
         }
     });
 };
 
 //Method to delete a movie
-router.deleteMovie = (req, res) => {
-    Movie.findByIdAndRemove(req.params.id, function(err) {
+router.deleteMedia = (req, res) => {
+    Media.findByIdAndRemove(req.params.id, function(err) {
         if (err)
             res.send(JSON.stringify(err));
         else
@@ -97,45 +97,73 @@ router.deleteMovie = (req, res) => {
     });
 };
 
-//Method to get the number of upvotes on all movies
+//Method to get the number of upvotes on all media
 router.getAllVotes = (req, res) =>{
     let totalvotes;
-    Movie.find(function(err, movies) {
+    Media.find(function(err, medias) {
         if (err)
             res.send(JSON.stringify(err));
         else
-            totalvotes = getTotalVotes(movies);
+            totalvotes = getTotalVotes(medias);
             res.send("Total Votes: " + totalvotes);
     });
 };
 
 //Method that will randomly recomend a movie for the user
-router.pickRandomMovie = (req, res) =>{
-    let movie;
-    Movie.find(function (err,movies) {
-        if(err)
+router.pickRandomMedia = (req, res) =>{
+    let foundMedia =[];
+    Media.find(function(err, media) {
+        if (err)
             res.send(JSON.stringify(err));
-        else
-            movie = randomMovie(movies);
-            res.send(JSON.stringify(movie,null,5));
+        else{
+            if(req.params.type === "Movie"){
+                foundMedia = findMovies(media);
+            }else if(req.params.type === "Game"){
+                foundMedia = findGames(media);
+            }
+            if(foundMedia.length > 0){
+                res.send(JSON.stringify(randomMovie(foundMedia)));
+            }else{
+                res.send("No " + req.params.type + " found")
+            }
+        }
     });
 };
 
+router.findAllType = (req, res) =>{
+    let foundMedia =[];
+    Media.find(function(err, media) {
+        if (err)
+            res.send(JSON.stringify(err));
+        else{
+            if(req.params.type === "Movie"){
+                foundMedia = findMovies(media);
+            }else if(req.params.type === "Game"){
+                foundMedia = findGames(media);
+            }
+            if(foundMedia.length > 0){
+                res.send(JSON.stringify(foundMedia));
+            }else{
+                res.send("No " + req.params.type + " found")
+            }
+        }
+    });
+};
 //Method to add review to movie
 router.addReview = (req, res) =>{
 
-    Movie.findByIdAndUpdate(req.params.id,
+    Media.findByIdAndUpdate(req.params.id,
         {$push: {reviews: {review : req.body.reviewText, score : req.body.score}}},
-        function(err,movie) {
+        function(err,media) {
         if (err)
             res.send(JSON.stringify(err));
         else {
-            movie.rating = updateScore(movie.reviews, req.body.score);
-            movie.save(function (err) {
+            media.rating = updateScore(media.reviews, req.body.score);
+            media.save(function (err) {
                 if (err)
                     res.send(JSON.stringify(err));
                 else
-                    res.send(JSON.stringify(movie));
+                    res.send(JSON.stringify(media));
             })
         }
     });
@@ -143,20 +171,20 @@ router.addReview = (req, res) =>{
 
 //Method to delete review
 router.deleteReview = (req,res) =>{
-    Movie.findById(req.params.id, function (err, movie) {
+    Media.findById(req.params.id, function (err, media) {
         if(err)
             res.send(JSON.stringify(err));
         else{
             let isDeleted = false;
-            for(let i =0; i < movie.reviews.length; i +=1){
+            for(let i =0; i < media.reviews.length; i +=1){
                 //console.log(movie.reviews[i]._id + " : " + req.params.reviewId);
-                if(movie.reviews[i]._id.equals(req.params.reviewId)){
-                    movie.reviews.splice(i, 1);
-                    movie.save(function (err) {
+                if(media.reviews[i]._id.equals(req.params.reviewId)){
+                    media.reviews.splice(i, 1);
+                    media.save(function (err) {
                         if(err)
                             res.send(JSON.stringify(err));
                         else
-                            res.send(JSON.stringify(movie,null,5))
+                            res.send(JSON.stringify(media,null,5))
                     });
                     isDeleted = true;
                     break;
@@ -168,49 +196,73 @@ router.deleteReview = (req,res) =>{
     });
 };
 
-//Method to search movies based on genre
+//Method to search media based on genre
 router.searchByGenre = (req, res) => {
     let found = [];
-    movies.find(function(err, movies) {
+    media.find(function(err, medias) {
         if (err)
             res.send(err);
         else
-            for(let i =0; i < movies.length; i+=1){
-                if(movies[i].genre === req.params.genre){
-                    found.push(movies[i]);
+            for(let i =0; i < medias.length; i+=1){
+                if(medias[i].genre === req.params.genre){
+                    found.push(medias[i]);
                 }
             }
             if(found.length >= 1){
                 res.send(JSON.stringify(found,null,5));
             }else {
-                res.send("No movies found");
+                res.send("No media found");
             }
     });
 };
 
-//Method to search movies based on rating
+//Method to search media based on rating
 router.searchByRating = (req, res) => {
     let found = [];
-    movies.find(function(err, movies) {
+    media.find(function(err, medias) {
         if (err)
             res.send(err);
         else
-            for(let i =0; i < movies.length; i+=1){
-                console.log(movies[i].rating + " : " + req.params.rating);
-                if(Number(movies[i].rating) >= Number(req.params.rating)){
-                    found.push(movies[i]);
+            for(let i =0; i < medias.length; i+=1){
+                console.log(medias[i].rating + " : " + req.params.rating);
+                if(Number(medias[i].rating) >= Number(req.params.rating)){
+                    found.push(medias[i]);
                 }
             }
         if(found.length >= 1){
             res.send(JSON.stringify(found,null,5));
         }else {
-            res.send("No movies found");
+            res.send("No media found");
         }
     });
 };
+
 //----------------------------------------------//
 //---------------Helper Functions---------------//
 //----------------------------------------------//
+
+
+//Helper function to return all Movies
+function findMovies(media) {
+    let movies = [];
+    for(let i =0; i < media.length; i+=1){
+        if(media[i].type === "Movie"){
+            movies.push(media[i]);
+        }
+    }
+    return movies;
+}
+
+//Helper function to return all Games
+function findGames(media){
+    let games = [];
+    for(let i =0; i < media.length; i+=1){
+        if(media[i].type === "Game"){
+            games.push(media[i]);
+        }
+    }
+    return games;
+}
 
 //Helper function to update movie score
 function updateScore(array, newScore) {

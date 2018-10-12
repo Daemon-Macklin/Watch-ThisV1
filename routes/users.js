@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let User = require('../models/users');
+let mongodbUri = "mongodb://DMacklin:DMacklin1998@ds149855.mlab.com:49855/movies";
+let router = express.Router();
+let mongoose = require('mongoose');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+
+
 
 module.exports = router;
