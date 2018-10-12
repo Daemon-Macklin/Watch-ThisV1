@@ -9,7 +9,7 @@ let MediaSchema = new mongoose.Schema({
         reviews : [{
             review : {type: String, default: ""},
             //userId : {type: String, default: ""},
-            score : {type: Number, default: -1},
+            score : {type: Number, default: 0},
             upvotes : {type: Number, default: 0}
         }]
     },
