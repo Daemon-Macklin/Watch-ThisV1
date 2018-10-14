@@ -3,11 +3,12 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 let UsersSchema = new mongoose.Schema({
-        email: {type: String},
+        userName: {type: String},
+        email: {type: String, default: ""},
         hash: {type: String},
         salt: {type: String}
     },
-    { collection: 'media' });
+    { collection: 'users' });
 
 
 UsersSchema.methods.setPassword = function(password) {
@@ -40,4 +41,4 @@ UsersSchema.methods.toAuthJSON = function() {
     };
 };
 
-mongoose.model('Users', UsersSchema);
+module.exports = mongoose.model('User', UsersSchema);
