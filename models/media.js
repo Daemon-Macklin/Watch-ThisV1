@@ -5,10 +5,11 @@ let MediaSchema = new mongoose.Schema({
         type: {type: String, default: ""},
         title: {type: String, default: ""},
         genre: {type: String, default: ""},
+        userId : {type: String, default: ""},
         rating : {type: Number, default: 0},
         reviews : [{
             review : {type: String, default: ""},
-            //userId : {type: String, default: ""},
+            userId : {type: String, default: ""},
             score : {type: Number, default: 0},
             upvotes : {type: Number, default: 0}
         }]

@@ -27,6 +27,8 @@ app.post('/user', usersRouter.addUser);
 app.post('/media', media.addMedia);
 app.get('/media', media.findAll);
 app.post('/user/signin', usersRouter.signIn);
+app.get('/media/findUserMedia/:userId', media.searchMediaByUser);
+app.get('/media/findUserReview/:userId', media.searchReviewByUser);
 app.get('/media/getTotalVotes', media.getAllVotes);
 app.get('/media/searchByType/:type', media.findAllType);
 app.get('/media/:type/pickRandomMedia', media.pickRandomMedia);
@@ -38,6 +40,7 @@ app.delete('/media/:id/removeMedia', media.deleteMedia);
 app.post('/media/:id/addReview', media.addReview);
 app.delete('/media/:id/removeReview/:reviewId', media.deleteReview);
 app.put('/media/:id/upvoteReview/:reviewId', media.incrementUpvotes);
+app.delete('/user/removeUser/userId', usersRouter.deleteUser);
 
 
 // catch 404 and forward to error handler

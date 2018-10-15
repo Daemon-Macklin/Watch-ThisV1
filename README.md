@@ -53,5 +53,5 @@ There are two collections, media and users. Reviews are stored in media as a
 list with it's associated media object.
 
 ### Git Hub
-Full project code with comprehensible commit history. 
+Full project code with comprehensible commit history: 
 https://github.com/Daemon-Macklin/Watch-ThisV1 

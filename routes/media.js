@@ -55,6 +55,7 @@ router.addMedia = (req, res) => {
      media.type = req.body.type;
      media.title = req.body.title;
      media.genre = req.body.genre;
+     media.userId = req.body.userId;
 
     media.save(function(err) {
         if (err)
@@ -155,7 +156,7 @@ router.findAllType = (req, res) =>{
 router.addReview = (req, res) =>{
 
     Media.findByIdAndUpdate(req.params.id,
-        {$push: {reviews: {review : req.body.reviewText, score : req.body.score}}},
+        {$push: {reviews: {review : req.body.reviewText, score : req.body.score, userId : req.body.userId}}},
         function(err,media) {
         if (err)
             res.send(JSON.stringify(err));
@@ -217,6 +218,49 @@ router.searchByGenre = (req, res) => {
             }
     });
 };
+
+//Mehod to find all media submited by user
+router.searchMediaByUser = (req, res) =>{
+    let found =[];
+    media.find(function(err, medias) {
+        if (err)
+            res.send(err);
+        else
+            for(let i =0; i < medias.length; i+=1){
+                if(medias[i].userId === req.params.userId){
+                    found.push(medias[i]);
+                }
+            }
+        if(found.length >= 1){
+            res.send(JSON.stringify(found,null,5));
+        }else {
+            res.send("No media found for user");
+        }
+    });
+};
+
+//Method to find all reviews submitted by a user
+router.searchReviewByUser = (req, res) =>{
+    let found =[];
+    media.find(function(err, medias) {
+        if (err)
+            res.send(err);
+        else
+            for(let i =0; i < medias.length; i+=1){
+                for(let j=0; j < medias[i].reviews.length; j+=1){
+                    if(medias[i].reviews[j].userId===req.params.userId){
+                        found.push(medias[i].reviews[j]);
+                    }
+                }
+            }
+        if(found.length >= 1){
+            res.send(JSON.stringify(found,null,5));
+        }else {
+            res.send("No reviews found for user");
+        }
+    });
+};
+
 
 //Method to search media based on rating
 router.searchByRating = (req, res) => {

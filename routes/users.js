@@ -31,10 +31,39 @@ router.addUser = (req, res) => {
     })
 };
 
+router.deleteUser = (req, res) =>{
+    User.findById(req.params.id, function (err, user) {
+        if(err)
+            res.send(JSON.stringify(err));
+        else{
+            for(let i =0; i < user.length; i +=1){
+                if(user._id.equals(req.params.userId)) {
+                    if (user.email.equals(req.body.user)) {
+                        if (user.validatePassword(req.body.password)) {
+                            user.reviews.splice(i, 1);
+                            user.save(function (err) {
+                                if (err)
+                                    res.send(JSON.stringify(err));
+                                else
+                                    res.send(JSON.stringify(user, null, 5))
+                            });
+                        }else{
+                            res.send("Password incorrect")
+                        }
+                    }else{
+                     res.send("Email not valid")
+                    }
+                }else{
+                    res.send("Id not found");
+                }
+            }
+        }
+    });
+};
+
 router.signIn = (req, res) =>{
     let found;
     User.find(function(err, users) {
-        console.log(users);
         if (err)
             res.send(err);
         else {
@@ -55,4 +84,10 @@ router.signIn = (req, res) =>{
         }
     });
 };
+
+
+//----------------------------------------------//
+//---------------Helper Functions---------------//
+//----------------------------------------------//
+
 module.exports = router;
