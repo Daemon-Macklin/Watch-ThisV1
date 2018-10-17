@@ -18,9 +18,15 @@ db.once('open', function () {
 //---------------Router Functions---------------//
 //----------------------------------------------//
 
+//Method to add user
 router.addUser = (req, res) => {
     user = new User();
-    user.userName = req.body.userName;
+    let newUserName;
+    if(req.body.username.length > 20){
+        newUserName = req.params.userName.slice(20);
+    }else
+        newUserName = req.body.userName;
+    user.userName = newUserName;
     user.email = req.body.email;
     user.setPassword(req.body.password);
     user.save(function (err) {
@@ -31,36 +37,28 @@ router.addUser = (req, res) => {
     })
 };
 
+//Method to delete a user
 router.deleteUser = (req, res) =>{
-    User.findById(req.params.id, function (err, user) {
+    User.findById(req.params.userId, function (err, user) {
         if(err)
-            res.send(JSON.stringify(err));
+            res.send(err);
         else{
-            for(let i =0; i < user.length; i +=1){
-                if(user._id.equals(req.params.userId)) {
-                    if (user.email.equals(req.body.user)) {
-                        if (user.validatePassword(req.body.password)) {
-                            user.reviews.splice(i, 1);
-                            user.save(function (err) {
-                                if (err)
-                                    res.send(JSON.stringify(err));
-                                else
-                                    res.send(JSON.stringify(user, null, 5))
-                            });
-                        }else{
-                            res.send("Password incorrect")
-                        }
-                    }else{
-                     res.send("Email not valid")
-                    }
-                }else{
-                    res.send("Id not found");
-                }
+            if(user.email === req.body.email && user.validatePassword(req.body.password)){
+                User.findByIdAndRemove(req.params.userId , function (err) {
+                    if(err)
+                        res.send(err);
+                    else
+                        res.send("User removed")
+                });
+            }else{
+                res.send("Email or password incorrect")
             }
         }
     });
 };
 
+
+//Method to sign in a user
 router.signIn = (req, res) =>{
     let found;
     User.find(function(err, users) {
@@ -80,6 +78,26 @@ router.signIn = (req, res) =>{
             }
             if (!found) {
                 res.send("Can't find user")
+            }
+        }
+    });
+};
+
+//Method to update user name
+router.updateUserName = (req, res) =>{
+    User.findById(req.params.userId, function (err, user) {
+        if(err)
+            res.send(err);
+        else{
+            if(user.email === req.body.email && user.validatePassword(req.body.password)){
+                User.findByIdAndUpdate(req.params.userId, {userName : req.body.newUserName}, function (err, user) {
+                    if(err)
+                        res.send(err);
+                    else
+                        res.send(user);
+                });
+            }else{
+                res.send("Email or password incorrect");
             }
         }
     });

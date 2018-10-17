@@ -40,7 +40,8 @@ app.delete('/media/:id/removeMedia', media.deleteMedia);
 app.post('/media/:id/addReview', media.addReview);
 app.delete('/media/:id/removeReview/:reviewId', media.deleteReview);
 app.put('/media/:id/upvoteReview/:reviewId', media.incrementUpvotes);
-app.delete('/user/removeUser/userId', usersRouter.deleteUser);
+app.delete('/user/removeUser/:userId', usersRouter.deleteUser);
+app.put('/user/:userId/updateUserName', usersRouter.updateUserName);
 
 
 // catch 404 and forward to error handler
