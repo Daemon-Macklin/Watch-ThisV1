@@ -6,6 +6,7 @@ let MediaSchema = new mongoose.Schema({
         title: {type: String, default: ""},
         genre: {type: String, default: ""},
         userId : {type: String, default: ""},
+        youtubeLink : {type: String, default: ""},
         rating : {type: Number, default: 0},
         reviews : [{
             review : {type: String, default: ""},

@@ -1,7 +1,7 @@
 let media = require('../models/media');
 let express = require('express');
 let Media = require('../models/media');
-let mongodbUri = "mongodb://:@ds149855.mlab.com:49855/movies";
+let mongodbUri = "mongodb://DMacklin:@ds149855.mlab.com:49855/movies";
 let router = express.Router();
 let mongoose = require('mongoose');
 
@@ -56,6 +56,7 @@ router.addMedia = (req, res) => {
      media.title = req.body.title;
      media.genre = req.body.genre;
      media.userId = req.body.userId;
+     media.youtubeLink = req.body.youtubeLink;
 
     media.save(function(err) {
         if (err)
@@ -154,7 +155,6 @@ router.findAllType = (req, res) =>{
 
 //Method to add review to movie
 router.addReview = (req, res) =>{
-
     Media.findByIdAndUpdate(req.params.id,
         {$push: {reviews: {review : req.body.reviewText, score : req.body.score, userId : req.body.userId}}},
         function(err,media) {

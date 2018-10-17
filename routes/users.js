@@ -1,6 +1,6 @@
 let express = require('express');
 let User = require('../models/users');
-let mongodbUri = "mongodb://:@ds149855.mlab.com:49855/movies";
+let mongodbUri = "mongodb://DMacklin:@ds149855.mlab.com:49855/movies";
 let router = express.Router();
 let mongoose = require('mongoose');
 
