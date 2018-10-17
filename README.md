@@ -51,7 +51,8 @@ to sign in. The User model contains:
 * Email: This is the email of the user.
 * UserName: This is the UserName of the password.
 * Salt: This is a randomly generated 16 bit salt used to randomize the password. 
-* Hash: This is basically a big goobldygoop number innit
+* Hash: This is the result of sending the user supplied password and the salt though
+a sha512 cryptographic hash function the result is a 128-digit hexadecimal number.
 
 ##### Searches:
 There a number of ways to search though the media. It can be done by type, this 
@@ -63,6 +64,82 @@ return a list of media with the same name as what the user requested. The search
 by name function also uses a fuzzy search which will return media with the same
 first few letters.
 
+### Routes
+
+##### Get
+```app.get('/media', media.findAll);```
+This returns all of the media stored in the mongo database.
+
+```app.get('/media/findUserMedia/:userId', media.searchMediaByUser);```
+This returns all of the media stored in the database uploaded by a specific user.
+
+```app.get('/media/findUserReview/:userId', media.searchReviewByUser);```
+This returns all of the reviews stored in the database uploaded by a specific user.
+
+
+```app.get('/media/getTotalVotes', media.getAllVotes);```
+This returns the total number of upvotes given to all reviews.
+
+
+```app.get('/media/searchByType/:type', media.findAllType);```
+This returns all the Media of a specific type. i.e Movie or Game.
+
+
+```app.get('/media/:type/pickRandomMedia', media.pickRandomMedia);```
+This will return a randomly picked media. Either a movie or game based on the 
+type field.
+ 
+
+```app.get('/media/searchByGenre/:genre', media.searchByGenre);```
+This returns all the Media of a specific genre. i.e Action, Comedy.
+
+
+```app.get('/media/searchByTitle/:title', media.searchByTitle);```
+This returns all the Media of a specific title. or with a similar title.
+
+
+```app.get('/media/:id', media.findOne);```
+This returns a Media with the specific id.
+
+
+```app.get('/media/searchByRating/:rating', media.searchByRating);```
+This returns all media over a specific rating.
+
+
+##### Put
+```app.put('/media/:id/upvoteReview/:reviewId', media.incrementUpvotes);```
+This adds one to the upvote field in a review.
+
+
+```app.put('/user/:userId/updateUserName', usersRouter.updateUserName);```
+This will update a users userName.
+
+
+##### Post 
+```app.post('/user', usersRouter.addUser);```
+This adds a user to the database.
+
+```app.post('/media', media.addMedia);```
+This adds a media to the database.
+
+```app.post('/media/:id/addReview', media.addReview);```
+This adds a review to a media in the database.
+
+```app.post('/user/signin', usersRouter.signIn);```
+This will sign in a user if the correct credentials are supplied.
+
+
+##### Delete
+```app.delete('/media/:id/removeMedia', media.deleteMedia);```
+This will remove a Media from the database.
+
+
+```app.delete('/user/removeUser/:userId', usersRouter.deleteUser);```
+This will remove a user from the database.
+
+
+```app.delete('/media/:id/removeReview/:reviewId', media.deleteReview);```
+This will remove a review from a media in the database.
 
 
 ### Persistence
