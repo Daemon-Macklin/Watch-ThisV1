@@ -37,6 +37,7 @@ app.get('/media/searchByTitle/:title', media.searchByTitle);
 app.get('/media/:id', media.findOne);
 app.get('/media/searchByRating/:rating', media.searchByRating);
 app.delete('/media/:id/removeMedia', media.deleteMedia);
+app.put('/media/:id/updateTitle', media.updateTitle);
 app.post('/media/:id/addReview', media.addReview);
 app.delete('/media/:id/removeReview/:reviewId', media.deleteReview);
 app.put('/media/:id/upvoteReview/:reviewId', media.incrementUpvotes);

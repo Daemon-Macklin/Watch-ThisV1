@@ -20,6 +20,7 @@ db.once('open', function () {
 
 //Method to add user
 router.addUser = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     user = new User();
     let newUserName;
     if(req.body.username.length > 20){
@@ -39,6 +40,7 @@ router.addUser = (req, res) => {
 
 //Method to delete a user
 router.deleteUser = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     User.findById(req.params.userId, function (err, user) {
         if(err)
             res.send(err);
@@ -60,6 +62,7 @@ router.deleteUser = (req, res) =>{
 
 //Method to sign in a user
 router.signIn = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     let found;
     User.find(function(err, users) {
         if (err)
@@ -85,6 +88,7 @@ router.signIn = (req, res) =>{
 
 //Method to update user name
 router.updateUserName = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     User.findById(req.params.userId, function (err, user) {
         if(err)
             res.send(err);
@@ -94,7 +98,7 @@ router.updateUserName = (req, res) =>{
                     if(err)
                         res.send(err);
                     else
-                        res.send(user);
+                        res.send(JSON.stringify(user,null,5))
                 });
             }else{
                 res.send("Email or password incorrect");

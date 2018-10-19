@@ -26,7 +26,6 @@ db.once('open', function () {
 router.findAll = (req, res) => {
     // Return a JSON representation of our list
     res.setHeader('Content-Type', 'application/json');
-
     media.find(function(err, media) {
         if (err)
             res.send(err);
@@ -37,9 +36,7 @@ router.findAll = (req, res) => {
 
 //Method to find one movie or game
 router.findOne = (req, res) => {
-
     res.setHeader('Content-Type', 'application/json');
-
     Media.find({ "_id" : req.params.id },function(err, media) {
         if (err)
          res.send(JSON.stringify(err));
@@ -50,7 +47,7 @@ router.findOne = (req, res) => {
 
 // Method to add a movie or game to the database
 router.addMedia = (req, res) => {
-
+    res.setHeader('Content-Type', 'application/json');
     let media = new Media();
      media.type = req.body.type;
      media.title = req.body.title;
@@ -68,7 +65,7 @@ router.addMedia = (req, res) => {
 
 //Method to add an upvote to a review
 router.incrementUpvotes = (req, res) => {
-
+    res.setHeader('Content-Type', 'application/json');
     Media.findById(req.params.id, function(err,media) {
         if (err)
          res.send(JSON.stringify(err));
@@ -91,8 +88,9 @@ router.incrementUpvotes = (req, res) => {
 
 //Method to delete a movie or game
 router.deleteMedia = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     Media.findByIdAndRemove(req.params.id, function(err) {
-        if (err)
+        if (err)+
             res.send(JSON.stringify(err));
         else
             res.send(req.params.id + " Removed")
@@ -101,6 +99,7 @@ router.deleteMedia = (req, res) => {
 
 //Method to get the number of upvotes on all media
 router.getAllVotes = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     let totalvotes;
     Media.find(function(err, medias) {
         if (err)
@@ -113,6 +112,7 @@ router.getAllVotes = (req, res) =>{
 
 //Method that will randomly recommend a movie or game for the user
 router.pickRandomMedia = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     let foundMedia =[];
     Media.find(function(err, media) {
         if (err)
@@ -134,6 +134,7 @@ router.pickRandomMedia = (req, res) =>{
 
 //Method to find all Movie OR Games depending on user input
 router.findAllType = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     let foundMedia =[];
     Media.find(function(err, media) {
         if (err)
@@ -155,6 +156,7 @@ router.findAllType = (req, res) =>{
 
 //Method to add review to movie
 router.addReview = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     Media.findByIdAndUpdate(req.params.id,
         {$push: {reviews: {review : req.body.reviewText, score : req.body.score, userId : req.body.userId}}},
         function(err,media) {
@@ -174,6 +176,7 @@ router.addReview = (req, res) =>{
 
 //Method to delete review
 router.deleteReview = (req,res) =>{
+    res.setHeader('Content-Type', 'application/json');
     Media.findById(req.params.id, function (err, media) {
         if(err)
             res.send(JSON.stringify(err));
@@ -199,8 +202,20 @@ router.deleteReview = (req,res) =>{
     });
 };
 
+//Method to update a media Title
+router.updateTitle = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
+    Media.findByIdAndUpdate(req.params.id, {title : req.body.newTitle}, function (err, media) {
+        if (err)
+            res.send(err);
+        else
+            res.send(JSON.stringify(media,null,5))
+    });
+};
+
 //Method to search media based on genre
 router.searchByGenre = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     let found = [];
     media.find(function(err, medias) {
         if (err)
@@ -221,6 +236,7 @@ router.searchByGenre = (req, res) => {
 
 //Mehod to find all media submited by user
 router.searchMediaByUser = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     let found =[];
     media.find(function(err, medias) {
         if (err)
@@ -241,6 +257,7 @@ router.searchMediaByUser = (req, res) =>{
 
 //Method to find all reviews submitted by a user
 router.searchReviewByUser = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
     let found =[];
     media.find(function(err, medias) {
         if (err)
@@ -264,6 +281,7 @@ router.searchReviewByUser = (req, res) =>{
 
 //Method to search media based on rating
 router.searchByRating = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     let found = [];
     media.find(function(err, medias) {
         if (err)
@@ -284,6 +302,7 @@ router.searchByRating = (req, res) => {
 };
 
 router.searchByTitle = (req,res) =>{
+    res.setHeader('Content-Type', 'application/json');
     let found = [];
     media.find(function(err, medias) {
         if (err)

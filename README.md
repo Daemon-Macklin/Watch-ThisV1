@@ -115,6 +115,10 @@ This adds one to the upvote field in a review.
 This will update a users userName.
 
 
+```app.put('/media/:id/updateTitle', media.updateTitle);```
+This will update th title of a media
+
+
 ##### Post 
 ```app.post('/user', usersRouter.addUser);```
 This adds a user to the database.
@@ -144,9 +148,27 @@ This will remove a review from a media in the database.
 
 ### Persistence
 Media, Reviews and Users and all stored in a Mongo noSQL database hosted on mlab.
-There are two collections, media and users. Reviews are stored in media as a 
-list with it's associated media object.
+There are two collections, media and users.
 
 ### Git Hub
 Full project code with comprehensible commit history: 
 https://github.com/Daemon-Macklin/Watch-ThisV1 
+
+### References
+
+##### Project Scaffolding
+ Used node.js and webpack for project scaffolding.
+ Followed David Drohan labs for basic RESTful functionality 
+ 
+ ##### Authentication Users
+ Used Json Web Token and Crypto modules to encrypt passwords and generate tokens.
+ Planning to use passport.js for token management.
+ 
+ Followed [this tutorial](https://medium.freecodecamp.org/learn-how-to-handle-authentication-with-node-using-passport-js-4a56ed18e81e)
+ for user authentication and user schema.  
+ 
+ ##### Deployment
+ Using heroku to host server
+  
+ 
+ 
