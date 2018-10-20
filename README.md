@@ -3,6 +3,7 @@
 
 *Student Number: 20075689*
 #### Read me best veiwed on [Git Hub](https://github.com/Daemon-Macklin/Watch-ThisV1) or other markdown viewer
+#### Server hosted [here](https://watch-thisv1.herokuapp.com/)
 
 ### Introduction
 Watch-This is a web application that allows users to review 
@@ -175,6 +176,7 @@ https://github.com/Daemon-Macklin/Watch-ThisV1
  
  ##### Deployment
  Using [heroku](https://www.heroku.com/) to host server
+ Server hosted [here](https://watch-thisv1.herokuapp.com/)
   
  
  
