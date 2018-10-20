@@ -1,7 +1,7 @@
 let media = require('../models/media');
 let express = require('express');
 let Media = require('../models/media');
-let mongodbUri = "mongodb://DMacklin:@ds149855.mlab.com:49855/movies";
+let mongodbUri = "mongodb://DMacklin:watchthis1@ds149855.mlab.com:49855/movies";
 let router = express.Router();
 let mongoose = require('mongoose');
 
@@ -387,7 +387,11 @@ function randomMovie(array) {
 //Helper function for getting total upvotes
 function getTotalVotes(array){
     let totalVotes = 0;
-    array.forEach(function (obj){totalVotes += obj.upvotes;});
+    for(let i =0; i < array.length; i+=1){
+        for(let j =0; j < array[j].reviews.length; j+=1){
+            totalVotes += array[i].reviews[j].upvotes
+        }
+    }
     return totalVotes
 }
 

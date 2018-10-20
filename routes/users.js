@@ -1,6 +1,6 @@
 let express = require('express');
 let User = require('../models/users');
-let mongodbUri = "mongodb://DMacklin:@ds149855.mlab.com:49855/movies";
+let mongodbUri = "mongodb://DMacklin:watchthis1@ds149855.mlab.com:49855/movies";
 let router = express.Router();
 let mongoose = require('mongoose');
 
@@ -17,6 +17,17 @@ db.once('open', function () {
 //----------------------------------------------//
 //---------------Router Functions---------------//
 //----------------------------------------------//
+
+//Method to get all users
+router.findAll = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    User.find(function (err, users) {
+        if(err)
+            res.send(err);
+        else
+            res.send(JSON.stringify(users,null,5));
+    })
+};
 
 //Method to add user
 router.addUser = (req, res) => {

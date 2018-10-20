@@ -26,6 +26,7 @@ app.use('/users', usersRouter);
 app.post('/user', usersRouter.addUser);
 app.post('/media', media.addMedia);
 app.get('/media', media.findAll);
+app.get('/user', usersRouter.findAll);
 app.post('/user/signin', usersRouter.signIn);
 app.get('/media/findUserMedia/:userId', media.searchMediaByUser);
 app.get('/media/findUserReview/:userId', media.searchReviewByUser);

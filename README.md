@@ -70,8 +70,15 @@ first few letters.
 ```app.get('/media', media.findAll);```
 This returns all of the media stored in the mongo database.
 
+
+```app.get('/user', usersRouter.findAll);```
+This returns all of the users stored in the mongo database.
+
+
 ```app.get('/media/findUserMedia/:userId', media.searchMediaByUser);```
 This returns all of the media stored in the database uploaded by a specific user.
+
+
 
 ```app.get('/media/findUserReview/:userId', media.searchReviewByUser);```
 This returns all of the reviews stored in the database uploaded by a specific user.
@@ -158,17 +165,16 @@ https://github.com/Daemon-Macklin/Watch-ThisV1
 
 ##### Project Scaffolding
  Used node.js and webpack for project scaffolding.
- Followed David Drohan labs for basic RESTful functionality 
+ Followed [David Drohan's labs](https://ddrohan.github.io/wit-wad-2-2018/index.html) for basic RESTful functionality
+ and setting up Mongo and Mlab support and deployment. 
  
  ##### Authentication Users
- Used Json Web Token and Crypto modules to encrypt passwords and generate tokens.
- Planning to use passport.js for token management.
- 
- Followed [this tutorial](https://medium.freecodecamp.org/learn-how-to-handle-authentication-with-node-using-passport-js-4a56ed18e81e)
+ Used [Json Web Token](https://jwt.io/) and [Crypto](https://www.npmjs.com/package/crypto-js) modules to encrypt passwords and generate tokens.
+ Planning to use passport.js for token management. Followed [this tutorial](https://medium.freecodecamp.org/learn-how-to-handle-authentication-with-node-using-passport-js-4a56ed18e81e)
  for user authentication and user schema.  
  
  ##### Deployment
- Using heroku to host server
+ Using [heroku](https://www.heroku.com/) to host server
   
  
  
