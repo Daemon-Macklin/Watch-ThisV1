@@ -156,7 +156,8 @@ This will remove a review from a media in the database.
 
 ### Persistence
 Media, Reviews and Users and all stored in a Mongo noSQL database hosted on mlab.
-There are two collections, media and users.
+There are two collections, media and users. Reviews are stored inside the media that
+they are reviewing.
 
 ### Git Hub
 Full project code with comprehensible commit history: 
@@ -165,18 +166,23 @@ https://github.com/Daemon-Macklin/Watch-ThisV1
 ### References
 
 ##### Project Scaffolding
- Used node.js and webpack for project scaffolding.
- Followed [David Drohan's labs](https://ddrohan.github.io/wit-wad-2-2018/index.html) for basic RESTful functionality
+ * Used [node.js](https://nodejs.org/en/) and [webpack](https://webpack.js.org/) for project scaffolding.
+ * Followed [David Drohan's labs](https://ddrohan.github.io/wit-wad-2-2018/index.html) for basic RESTful functionality
  and setting up Mongo and Mlab support and deployment. 
  
  ##### Authentication Users
- Used [Json Web Token](https://jwt.io/) and [Crypto](https://www.npmjs.com/package/crypto-js) modules to encrypt passwords and generate tokens.
- Planning to use passport.js for token management. Followed [this tutorial](https://medium.freecodecamp.org/learn-how-to-handle-authentication-with-node-using-passport-js-4a56ed18e81e)
+ * Used [Json Web Token](https://jwt.io/) and [Crypto](https://www.npmjs.com/package/crypto-js) modules to encrypt passwords and generate tokens.
+ * Planning to use [passport.js](http://www.passportjs.org/) for token management.
+ * Followed [this tutorial](https://medium.freecodecamp.org/learn-how-to-handle-authentication-with-node-using-passport-js-4a56ed18e81e)
  for user authentication and user schema.  
  
+ ##### Persistence
+ * Using a [mongo database](https://www.mongodb.com/).
+ * Database hosted on [mlabs](https://mlab.com/).
+ 
  ##### Deployment
- Using [heroku](https://www.heroku.com/) to host server
- Server hosted [here](https://watch-thisv1.herokuapp.com/)
+ * Using [heroku](https://www.heroku.com/) to host server
+ * Server hosted [here](https://watch-thisv1.herokuapp.com/).
   
  
  
