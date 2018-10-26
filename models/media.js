@@ -1,6 +1,10 @@
-//{type : "Movie", title : "Finding Nemo", genre: "Animation", upvotes : 0 },
+/*
+Daemon-Macklin
+ */
 let mongoose = require('mongoose');
-
+/*
+Schema for the media
+ */
 let MediaSchema = new mongoose.Schema({
         type: {type: String, default: ""},
         title: {type: String, default: ""},

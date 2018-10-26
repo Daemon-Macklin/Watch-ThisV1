@@ -20,8 +20,14 @@ db.once('open', function () {
 
 //Method to get all users
 router.findAll = (req, res) => {
+
+    //Setting header for formatting of response
     res.setHeader('Content-Type', 'application/json');
+
+    //Mongoose function that returns an array of users
     User.find(function (err, users) {
+
+        //If an err is returned display the err, other wise respond with the array
         if(err)
             res.send(err);
         else
@@ -32,6 +38,8 @@ router.findAll = (req, res) => {
 //Method to add user
 router.addUser = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+
+    //Generating new User and setting data gotten from body of request
     user = new User();
     let newUserName;
     if(req.body.username.length > 20){
@@ -41,6 +49,8 @@ router.addUser = (req, res) => {
     user.userName = newUserName;
     user.email = req.body.email;
     user.setPassword(req.body.password);
+
+    //Using mongoose funtion to save the new user to the db
     user.save(function (err) {
         if(err)
             res.send(err);
@@ -52,11 +62,17 @@ router.addUser = (req, res) => {
 //Method to delete a user
 router.deleteUser = (req, res) =>{
     res.setHeader('Content-Type', 'application/json');
+
+    //Mongoose function to find a user given an id from the params of the request
     User.findById(req.params.userId, function (err, user) {
         if(err)
             res.send(err);
         else{
+
+            //Preforming authentication before deleting the user
             if(user.email === req.body.email && user.validatePassword(req.body.password)){
+
+                //Mongoose function to find an user and remove them given an id from the params of the request
                 User.findByIdAndRemove(req.params.userId , function (err) {
                     if(err)
                         res.send(err);
@@ -79,10 +95,17 @@ router.signIn = (req, res) =>{
         if (err)
             res.send(err);
         else {
+
+            //Searching through users list to see if the email input is valid
             found = false;
             for (let i = 0; i < users.length; i += 1) {
                 if (users[i].email === req.body.email) {
+
+                    //If the email is valid check the hashed password stored against the hashed password the user input
                     if (users[i].validatePassword(req.body.password)) {
+
+                        //If the password check returns true display the user
+                        //This is where token generation will take place when implmented
                         res.send(JSON.stringify(users[i]));
                         found = true;
                     }
@@ -104,7 +127,11 @@ router.updateUserName = (req, res) =>{
         if(err)
             res.send(err);
         else{
+
+            //Authentication before changing password
             if(user.email === req.body.email && user.validatePassword(req.body.password)){
+
+                //Mongoose function to find a user and update a part or parts of it given an id
                 User.findByIdAndUpdate(req.params.userId, {userName : req.body.newUserName}, function (err, user) {
                     if(err)
                         res.send(err);
@@ -118,9 +145,5 @@ router.updateUserName = (req, res) =>{
     });
 };
 
-
-//----------------------------------------------//
-//---------------Helper Functions---------------//
-//----------------------------------------------//
 
 module.exports = router;
