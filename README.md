@@ -63,7 +63,7 @@ what the user has requested. By genre, this will return a list of movies or
 games with the same genre the user has requested. Finally by Name, this will 
 return a list of media with the same name as what the user requested. The search
 by name function also uses a fuzzy search which will return media with the same
-first few letters.
+first few letters. Case does not matter.
 
 ### Routes
 

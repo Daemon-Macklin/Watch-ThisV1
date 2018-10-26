@@ -371,7 +371,7 @@ router.searchByTitle = (req,res) =>{
             for (let i = 0; i < medias.length; i += 1) {
 
                 //if the title is what the user is looking for add it to the list
-                if (medias[i].title === req.params.title) {
+                if (medias[i].title.toLowerCase() === req.params.title.toLowerCase()) {
                     found.push(medias[i]);
                 }
             }
@@ -379,12 +379,13 @@ router.searchByTitle = (req,res) =>{
             //Loop through the first 3 letters of the title to user is searching for
             for (let i = 4; i > 0; i -= 1) {
                 let title = req.params.title.slice(0, i);
+                title = title.toLowerCase();
 
                 //Loop through the medias and take the first i letters and check against the first i letters of the title
                 //the user is looking for
                 for (let j = 0; j < medias.length; j += 1) {
                     let foundTitle = medias[j].title.slice(0, i);
-
+                    foundTitle = foundTitle.toLowerCase();
                     //If the strings match check to see if the media has already been found
                     if (title === foundTitle) {
                         let alreadyFound = false;
