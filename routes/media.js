@@ -32,9 +32,9 @@ router.findAll = (req, res) => {
 
         //If there is an error return the error other wise return the list of media
         if (err)
-            res.send(err);
+            return res.send(err);
         else
-        res.send(JSON.stringify(media,null,5));
+            return res.send(JSON.stringify(media,null,5));
     });
 };
 
@@ -45,9 +45,9 @@ router.findOne = (req, res) => {
     //Mongoose find function but a parameter _id is given so it will return all media with that id
     Media.find({ "_id" : req.params.id },function(err, media) {
         if (err)
-         res.send(JSON.stringify(err));
+            return res.send(JSON.stringify(err));
         else
-        res.send(JSON.stringify(media,null,5))
+            return res.send(JSON.stringify(media,null,5))
     });
 };
 
@@ -67,9 +67,9 @@ router.addMedia = (req, res) => {
      //Mongoose funtion to save a media to the database
     media.save(function(err) {
         if (err)
-        res.send(JSON.stringify(err));
+            return res.send(JSON.stringify(err));
         else
-        res.send(JSON.stringify(media,null,5));
+            return res.send(JSON.stringify(media,null,5));
     });
 };
 
@@ -80,7 +80,7 @@ router.incrementUpvotes = (req, res) => {
     //Mongoose function to find a media given an id
     Media.findById(req.params.id, function(err,media) {
         if (err)
-         res.send(JSON.stringify(err));
+            return res.send(JSON.stringify(err));
         else {
 
             //Looping through the reviews on a media and checking for the review with the correct id
@@ -96,9 +96,9 @@ router.incrementUpvotes = (req, res) => {
             //Saving after incrementing upvote
             media.save(function (err) {
                 if (err)
-                 res.send(JSON.stringify(err));
+                    return res.send(JSON.stringify(err));
                 else
-                 res.send(JSON.stringify(media,null,5));
+                    return res.send(JSON.stringify(media,null,5));
             });
         }
     });
@@ -110,10 +110,10 @@ router.deleteMedia = (req, res) => {
 
     //Mongoose funtion that will find a media and remove it given an id
     Media.findByIdAndRemove(req.params.id, function(err) {
-        if (err)+
-            res.send(JSON.stringify(err));
+        if (err)
+            return res.send(JSON.stringify(err));
         else
-            res.send(req.params.id + " Removed")
+            return res.send(req.params.id + " Removed")
     });
 };
 
@@ -123,10 +123,10 @@ router.getAllVotes = (req, res) =>{
     let totalvotes;
     Media.find(function(err, medias) {
         if (err)
-            res.send(JSON.stringify(err));
+            return res.send(JSON.stringify(err));
         else
             totalvotes = getTotalVotes(medias);
-            res.send("Total Votes: " + totalvotes);
+            return res.send("Total Votes: " + totalvotes);
     });
 };
 
@@ -138,7 +138,7 @@ router.pickRandomMedia = (req, res) =>{
     //Finding all media
     Media.find(function(err, media) {
         if (err)
-            res.send(JSON.stringify(err));
+            return res.send(JSON.stringify(err));
         else{
 
             //Seeing which type of media the user wants based on the parameters and calling the correct helper function
@@ -150,9 +150,9 @@ router.pickRandomMedia = (req, res) =>{
 
             //If there is media display the result of the randomMovie function otherwise display the type is empty
             if(foundMedia.length > 0){
-                res.send(JSON.stringify(randomMovie(foundMedia)));
+                return res.send(JSON.stringify(randomMovie(foundMedia)));
             }else{
-                res.send("No " + req.params.type + " found")
+                return res.send("No " + req.params.type + " found")
             }
         }
     });
@@ -164,7 +164,7 @@ router.findAllType = (req, res) =>{
     let foundMedia =[];
     Media.find(function(err, media) {
         if (err)
-            res.send(JSON.stringify(err));
+            return res.send(JSON.stringify(err));
         else{
             if(req.params.type === "Movie"){
                 foundMedia = findMovies(media);
@@ -172,9 +172,9 @@ router.findAllType = (req, res) =>{
                 foundMedia = findGames(media);
             }
             if(foundMedia.length > 0){
-                res.send(JSON.stringify(foundMedia));
+                return res.send(JSON.stringify(foundMedia));
             }else{
-                res.send("No " + req.params.type + " found")
+                return res.send("No " + req.params.type + " found")
             }
         }
     });
@@ -190,16 +190,16 @@ router.addReview = (req, res) =>{
         {$push: {reviews: {review : req.body.reviewText, score : req.body.score, userId : req.body.userId}}},
         function(err,media) {
         if (err)
-            res.send(JSON.stringify(err));
+            return res.send(JSON.stringify(err));
         else {
 
             //After adding a review update the review score and save it to the database
             media.rating = updateScore(media.reviews, req.body.score);
             media.save(function (err) {
                 if (err)
-                    res.send(JSON.stringify(err));
+                    return res.send(JSON.stringify(err));
                 else
-                    res.send(JSON.stringify(media));
+                    return res.send(JSON.stringify(media));
             })
         }
     });
@@ -210,7 +210,7 @@ router.deleteReview = (req,res) =>{
     res.setHeader('Content-Type', 'application/json');
     Media.findById(req.params.id, function (err, media) {
         if(err)
-            res.send(JSON.stringify(err));
+            return res.send(JSON.stringify(err));
         else{
             let isDeleted = false;
 
@@ -223,16 +223,16 @@ router.deleteReview = (req,res) =>{
                     media.reviews.splice(i, 1);
                     media.save(function (err) {
                         if(err)
-                            res.send(JSON.stringify(err));
+                            return res.send(JSON.stringify(err));
                         else
-                            res.send(JSON.stringify(media,null,5))
+                            return res.send(JSON.stringify(media,null,5))
                     });
                     isDeleted = true;
                     break;
                 }
             }
             if(!isDeleted)
-                res.send("Review not found");
+                return res.send("Review not found");
         }
     });
 };
@@ -242,9 +242,9 @@ router.updateTitle = (req, res) =>{
     res.setHeader('Content-Type', 'application/json');
     Media.findByIdAndUpdate(req.params.id, {title : req.body.newTitle}, function (err, media) {
         if (err)
-            res.send(err);
+            return res.send(err);
         else
-            res.send(JSON.stringify(media,null,5))
+            return res.send(JSON.stringify(media,null,5))
     });
 };
 
@@ -254,7 +254,7 @@ router.searchByGenre = (req, res) => {
     let found = [];
     media.find(function(err, medias) {
         if (err)
-            res.send(err);
+            return res.send(err);
         else
 
             //Loop through the media list and checking the genre
@@ -268,9 +268,9 @@ router.searchByGenre = (req, res) => {
 
             //If the list isn't empty return it
             if(found.length >= 1){
-                res.send(JSON.stringify(found,null,5));
+                return res.send(JSON.stringify(found,null,5));
             }else {
-                res.send("No media found");
+                return res.send("No media found");
             }
     });
 };
@@ -281,7 +281,7 @@ router.searchMediaByUser = (req, res) =>{
     let found =[];
     media.find(function(err, medias) {
         if (err)
-            res.send(err);
+            return res.send(err);
         else
 
             //Loop though list of media checking id
@@ -294,9 +294,9 @@ router.searchMediaByUser = (req, res) =>{
             }
             //If the list is empty inform the user, otherwise send the list
         if(found.length >= 1){
-            res.send(JSON.stringify(found,null,5));
+            return res.send(JSON.stringify(found,null,5));
         }else {
-            res.send("No media found for user");
+            return res.send("No media found for user");
         }
     });
 };
@@ -307,7 +307,7 @@ router.searchReviewByUser = (req, res) =>{
     let found =[];
     media.find(function(err, medias) {
         if (err)
-            res.send(err);
+            return res.send(err);
         else
 
             //Loop though each media and loop though the medias reviews checking the id
@@ -323,9 +323,9 @@ router.searchReviewByUser = (req, res) =>{
 
             //If the list is empty tell the user, if not display the list
         if(found.length >= 1){
-            res.send(JSON.stringify(found,null,5));
+            return res.send(JSON.stringify(found,null,5));
         }else {
-            res.send("No reviews found for user");
+            return res.send("No reviews found for user");
         }
     });
 };
@@ -337,7 +337,7 @@ router.searchByRating = (req, res) => {
     let found = [];
     media.find(function(err, medias) {
         if (err)
-            res.send(err);
+            return res.send(err);
         else
 
             //Loop though the medias and checking the ratings
@@ -352,9 +352,9 @@ router.searchByRating = (req, res) => {
 
             //If the array is empty tell the user, otherwise display the list
         if(found.length >= 1){
-            res.send(JSON.stringify(found,null,5));
+            return res.send(JSON.stringify(found,null,5));
         }else {
-            res.send("No media found");
+            return res.send("No media found");
         }
     });
 };
@@ -364,7 +364,7 @@ router.searchByTitle = (req,res) =>{
     let found = [];
     media.find(function(err, medias) {
         if (err)
-            res.send(err);
+            return res.send(err);
         else {
 
             //Loop though the list of medias checking the title
@@ -405,9 +405,9 @@ router.searchByTitle = (req,res) =>{
                 }
             }
             if (found.length >= 1) {
-                res.send(JSON.stringify(found, null, 5));
+                return res.send(JSON.stringify(found, null, 5));
             } else {
-                res.send("No media found");
+                return res.send("No media found");
             }
         }
     });

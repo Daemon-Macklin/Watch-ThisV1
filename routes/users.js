@@ -28,10 +28,12 @@ router.findAll = (req, res) => {
     User.find(function (err, users) {
 
         //If an err is returned display the err, other wise respond with the array
-        if(err)
-            res.send(err);
-        else
-            res.send(JSON.stringify(users,null,5));
+        if(err) {
+            return res.send(err);
+        }
+        else {
+            return res.send(JSON.stringify(users, null, 5));
+        }
     })
 };
 
@@ -42,8 +44,8 @@ router.addUser = (req, res) => {
     //Generating new User and setting data gotten from body of request
     user = new User();
     let newUserName;
-    if(req.body.username.length > 20){
-        newUserName = req.params.userName.slice(20);
+    if(req.body.userName.length > 20){
+        newUserName = req.body.userName.slice(20);
     }else
         newUserName = req.body.userName;
     user.userName = newUserName;
@@ -52,10 +54,12 @@ router.addUser = (req, res) => {
 
     //Using mongoose funtion to save the new user to the db
     user.save(function (err) {
-        if(err)
-            res.send(err);
-        else
-            res.send(JSON.stringify(user));
+        if(err) {
+            return res.send(err);
+        }
+        else {
+            return res.send(JSON.stringify(user));
+        }
     })
 };
 
@@ -65,8 +69,9 @@ router.deleteUser = (req, res) =>{
 
     //Mongoose function to find a user given an id from the params of the request
     User.findById(req.params.userId, function (err, user) {
-        if(err)
-            res.send(err);
+        if(err) {
+            return res.send(err);
+        }
         else{
 
             //Preforming authentication before deleting the user
@@ -74,13 +79,15 @@ router.deleteUser = (req, res) =>{
 
                 //Mongoose function to find an user and remove them given an id from the params of the request
                 User.findByIdAndRemove(req.params.userId , function (err) {
-                    if(err)
-                        res.send(err);
-                    else
-                        res.send("User removed")
+                    if(err) {
+                        return res.send(err);
+                    }
+                    else {
+                        return res.send("User removed");
+                    }
                 });
             }else{
-                res.send("Email or password incorrect")
+                return res.send("Email or password incorrect");
             }
         }
     });
@@ -92,8 +99,9 @@ router.signIn = (req, res) =>{
     res.setHeader('Content-Type', 'application/json');
     let found;
     User.find(function(err, users) {
-        if (err)
-            res.send(err);
+        if (err) {
+            return res.send(err);
+        }
         else {
 
             //Searching through users list to see if the email input is valid
@@ -103,18 +111,19 @@ router.signIn = (req, res) =>{
 
                     //If the email is valid check the hashed password stored against the hashed password the user input
                     if (users[i].validatePassword(req.body.password)) {
-
+                        found = true;
                         //If the password check returns true display the user
                         //This is where token generation will take place when implmented
-                        res.send(JSON.stringify(users[i]));
-                        found = true;
+                        return res.send(JSON.stringify(users[i]),null,5);
                     }
-                    else
-                        res.send("Invalid Password");
+                    else {
+                        found = true;
+                        return res.send("Invalid Password");
+                    }
                 }
             }
             if (!found) {
-                res.send("Can't find user")
+                return res.send("Can't find user");
             }
         }
     });
@@ -124,8 +133,9 @@ router.signIn = (req, res) =>{
 router.updateUserName = (req, res) =>{
     res.setHeader('Content-Type', 'application/json');
     User.findById(req.params.userId, function (err, user) {
-        if(err)
-            res.send(err);
+        if(err) {
+            return res.send(err);
+        }
         else{
 
             //Authentication before changing password
@@ -133,13 +143,15 @@ router.updateUserName = (req, res) =>{
 
                 //Mongoose function to find a user and update a part or parts of it given an id
                 User.findByIdAndUpdate(req.params.userId, {userName : req.body.newUserName}, function (err, user) {
-                    if(err)
-                        res.send(err);
-                    else
-                        res.send(JSON.stringify(user,null,5))
+                    if(err) {
+                        return res.send(err);
+                    }
+                    else{
+                        return res.send(JSON.stringify(user,null,5))
+                    }
                 });
             }else{
-                res.send("Email or password incorrect");
+                return res.send("Email or password incorrect");
             }
         }
     });
