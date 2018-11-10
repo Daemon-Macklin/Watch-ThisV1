@@ -1,0 +1,21 @@
+[
+  {
+    "type": "Game",
+    "title": "Dark Souls",
+    "genre": "RPG",
+    "userId": "",
+    "youtubeLink": "",
+    "rating": 5,
+    "_id": "5bbf9d960e178d0730e4aebb",
+    "reviews": [
+      {
+        "review": "Best game",
+        "userId": "5bc3a366f7ad13278cd8eae1",
+        "score": 5,
+        "upvotes": 0,
+        "_id": "5bc3b14301f75514fce23803"
+      }
+    ],
+    "__v": 0
+  }
+]

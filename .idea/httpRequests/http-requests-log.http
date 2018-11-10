@@ -1,0 +1,550 @@
+GET http://localhost:3000/media/movies
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-11-10T042553.200.json
+
+###
+
+GET http://localhost:3000/media/games
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-11-10T042546.200.json
+
+###
+
+GET http://localhost:3000/media/Movie/pickRandomMedia
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T071126.200.json
+
+###
+
+GET http://localhost:3000/media/Movie/pickRandomMedia
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T071124.200.json
+
+###
+
+GET http://localhost:3000/media/Movie/pickRandomMedia
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T071121.200.json
+
+###
+
+GET http://localhost:3000/media/Movie/pickRandomMedia
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T071115.200.json
+
+###
+
+GET http://localhost:3000/media/searchByTitle/the%20dark%20night
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T071039.200.json
+
+###
+
+GET http://localhost:3000/media/searchByGenre/Animation
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T071023.200.json
+
+###
+
+GET http://localhost:3000/media
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070954.200.json
+
+###
+
+GET http://localhost:3000/media/5bc3ae187fc28609ec595c52
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070947.200.json
+
+###
+
+DELETE http://localhost:3000/media/5bc3ae187fc28609ec595c52/removeMedia
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070940.200.json
+
+###
+
+GET http://localhost:3000/media
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070918.200.json
+
+###
+
+PUT http://localhost:3000/media/5bd4a95c9756f51064697bc1/upvoteReview/5bd4a98d9756f51064697bc2
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070901.200.json
+
+###
+
+GET http://localhost:3000/media/5bd4a95c9756f51064697bc1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070827.200.json
+
+###
+
+POST http://localhost:3000/media/5bd4a95c9756f51064697bc1/addReview
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070813.200.json
+
+###
+
+POST http://localhost:3000/media
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"type":"Movie", "title":"Friday the 13th", "genre":"Horror", "youtubeLink":"https://www.youtube.com/watch?v=NVsVKn-MS14", "userId":"5bd4a8669756f51064697bc0"}
+
+<> 2018-10-27T070725.200.json
+
+###
+
+GET http://localhost:3000/user
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmail.com", "password":"password"}
+
+<> 2018-10-27T070646.200.json
+
+###
+
+GET http://localhost:3000/media
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmail.com", "password":"password"}
+
+<> 2018-10-27T070627.200.json
+
+###
+
+DELETE http://localhost:3000/user/removeUser/5bd4a4b89756f51064697bbc
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmail.com", "password":"password"}
+
+<> 2018-10-27T070610.200.json
+
+###
+
+GET http://localhost:3000/user
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmail.com", "password":"password","newUserName":"JavaScriptMaster"}
+
+<> 2018-10-27T070526.200.json
+
+###
+
+PUT http://localhost:3000/user/5bd4a8669756f51064697bc0/updateUserName
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmail.com", "password":"password","newUserName":"JavaScriptMaster"}
+
+<> 2018-10-27T070512.200.json
+
+###
+
+GET http://localhost:3000/user/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmail.com", "password":"password"}
+
+<> 2018-10-27T070443.200.json
+
+###
+
+POST http://localhost:3000/user/signin
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmailcom", "password":"password"}
+
+<> 2018-10-27T070422.200.json
+
+###
+
+POST http://localhost:3000/user/signin
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmail.com", "password":"passord"}
+
+<> 2018-10-27T070415.200.json
+
+###
+
+POST http://localhost:3000/user/signin
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"random@hotmail.com", "password":"password"}
+
+<> 2018-10-27T070402.200.json
+
+###
+
+GET http://localhost:3000/user
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"JavaScriptBeginner", "email":"random@hotmail.com", "password":"password"}
+
+<> 2018-10-27T070338.200.json
+
+###
+
+POST http://localhost:3000/user
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"JavaScriptBeginner", "email":"random@hotmail.com", "password":"password"}
+
+<> 2018-10-27T070318.200.json
+
+###
+
+GET http://localhost:3000/user
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070230.200.json
+
+###
+
+DELETE http://localhost:3000/media/5bd4a5a89756f51064697bbe/removeMedia
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070217.200.json
+
+###
+
+GET http://localhost:3000/media
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T070152.200.json
+
+###
+
+GET http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065646.200.json
+
+###
+
+PUT http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065643.404.html
+
+###
+
+PUT http://localhost:3000/media/5bd4a5a89756f51064697bbe/upvoteReview/5bd4a6039756f51064697bbf
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065628.200.json
+
+###
+
+GET http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065550.200.json
+
+###
+
+GET http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065549-1.200.json
+
+###
+
+GET http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065549.200.json
+
+###
+
+GET http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065548.200.json
+
+###
+
+GET http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065452.200.json
+
+###
+
+PUT http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065449.404.html
+
+###
+
+PUT http://localhost:3000/media/5bd4a5a89756f51064697bbe/upvoteReview/5bd4a6039756f51064697bbf
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065438.200.json
+
+###
+
+GET http://localhost:3000/media/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065409.200.json
+
+###
+
+GET http://localhost:3000/media/getTotalVotes
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065354.200.json
+
+###
+
+GET http://localhost:3000/media/5bd4a5a89756f51064697bbe
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065322.200.json
+
+###
+
+POST http://localhost:3000/media/5bd4a5a89756f51064697bbe/addReview
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065307.200.json
+
+###
+
+PUT http://localhost:3000/media/5bd4a5a89756f51064697bbe/addReview
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"reviewText":"a good movie", "score":"4"}
+
+<> 2018-10-27T065303.404.html
+
+###
+
+GET http://localhost:3000/media/5bd4a5a89756f51064697bbe
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+ {"newTitle":"Friday the 13th"}
+
+<> 2018-10-27T065227.200.json
+
+###
+
+PUT http://localhost:3000/media/5bd4a5a89756f51064697bbe/updateTitle
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+ {"newTitle":"Friday the 13th"}
+
+<> 2018-10-27T065215.200.json
+
+###
+
+POST http://localhost:3000/media
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"type":"Movie", "title":"Friday the 12th", "genre":"Horror", "youtubeLink":"https://www.youtube.com/watch?v=NVsVKn-MS14", "userId":"5bd4a4b89756f51064697bbc"}
+
+<> 2018-10-27T065136.200.json
+
+###
+
+GET http://localhost:3000/media
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"email@hotmail.com", "password":"AgoodPassword"}
+
+<> 2018-10-27T065047.200.json
+
+###
+
+GET http://localhost:3000/user
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"email":"email@hotmail.com", "password":"AgoodPassword"}
+
+<> 2018-10-27T065031.200.json
+
+###
+

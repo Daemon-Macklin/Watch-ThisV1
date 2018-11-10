@@ -38,6 +38,36 @@ router.findAll = (req, res) => {
     });
 };
 
+router.findAllGames = (req,res) =>{
+    // Return a JSON representation of our list
+    res.setHeader('Content-Type', 'application/json');
+
+    //Mongoose function that returns an arry of all Games
+    media.find({"type":"Game"},function(err, media) {
+
+        //If there is an error return the error other wise return the list of media
+        if (err)
+            return res.send(err);
+        else
+            return res.send(JSON.stringify(media,null,5));
+    });
+};
+
+router.findAllMovies = (req,res) =>{
+    // Return a JSON representation of our list
+    res.setHeader('Content-Type', 'application/json');
+
+    //Mongoose function that returns an arry of all Movies
+    media.find({"type":"Movie"},function(err, media) {
+
+        //If there is an error return the error other wise return the list of media
+        if (err)
+            return res.send(err);
+        else
+            return res.send(JSON.stringify(media,null,5));
+    });
+};
+
 //Method to find one movie or game
 router.findOne = (req, res) => {
     res.setHeader('Content-Type', 'application/json');

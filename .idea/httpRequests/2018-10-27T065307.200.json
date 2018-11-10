@@ -1,0 +1,13 @@
+{
+  "type": "Movie",
+  "title": "Friday the 13th",
+  "genre": "Horror",
+  "userId": "5bd4a4b89756f51064697bbc",
+  "youtubeLink": "https://www.youtube.com/watch?v=NVsVKn-MS14",
+  "rating": 4,
+  "_id": "5bd4a5a89756f51064697bbe",
+  "reviews": [
+    null
+  ],
+  "__v": 0
+}

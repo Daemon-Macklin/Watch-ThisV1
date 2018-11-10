@@ -1,0 +1,11 @@
+{
+  "type": "Movie",
+  "title": "The Dark Night Rises",
+  "genre": "Action",
+  "userId": "5bc3546d420a7f2664c9facd",
+  "youtubeLink": "https://www.youtube.com/watch?v=GokKUqLcvD8",
+  "rating": 0,
+  "_id": "5bd2f5869205841088711b0d",
+  "reviews": [],
+  "__v": 0
+}
