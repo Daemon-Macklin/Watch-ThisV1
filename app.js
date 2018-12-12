@@ -34,6 +34,7 @@ app.get('/user', usersRouter.findAll);
 app.post('/user/signin', usersRouter.signIn);
 app.get('/media/findUserMedia/:userId', media.searchMediaByUser);
 app.get('/media/findUserReview/:userId', media.searchReviewByUser);
+app.get('/user/findUserName/:userId', usersRouter.findOne);
 app.get('/media/getTotalVotes', media.getAllVotes);
 app.get('/media/searchByType/:type', media.findAllType);
 app.get('/media/:type/pickRandomMedia', media.pickRandomMedia);
