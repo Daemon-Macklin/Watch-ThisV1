@@ -485,14 +485,14 @@ function findGames(media){
 function updateScore(array, newScore) {
     let totalScore = 0;
 
-    //Loop though the array of reviews and add up the socres
+    //Loop though the array of reviews and add up the scores
     for(let i = 0; i < array.length; i+=1 ){
         totalScore += array[i].score;
     }
 
     //Get the data needed the calculate the average
     let size = array.length +=1;
-    let total = totalScore + newScore;
+    let total = totalScore += newScore;
 
     //Calculate the average of all the scores
     let final = Math.round((total/size) * 100) / 100;
