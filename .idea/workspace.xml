@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2b937cf-dd31-49eb-9198-fa2ba96bd984" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/media.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/media.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -54,13 +53,13 @@
     <session id="878908710">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="54" />
+          <entry key="js" value="77" />
           <entry key="txt" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="54" />
+          <entry key="JavaScript" value="77" />
           <entry key="PLAIN_TEXT" value="20" />
         </counts>
       </usages-collector>
@@ -1577,7 +1576,7 @@
       <workItem from="1541785677025" duration="391000" />
       <workItem from="1541786121677" duration="1218000" />
       <workItem from="1541857053761" duration="1412000" />
-      <workItem from="1544620861464" duration="1876000" />
+      <workItem from="1544620861464" duration="2376000" />
     </task>
     <task id="LOCAL-00001" summary="Fixing set headers bug.">
       <created>1540658347776</created>
@@ -1614,11 +1613,25 @@
       <option name="project" value="LOCAL" />
       <updated>1544622809706</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixing rating avreage bug.">
+      <created>1544623091515</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1544623091515</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fixing rating avreage bug.">
+      <created>1544623287229</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1544623287229</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24731000" />
+    <option name="totallyTimeSpent" value="25231000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

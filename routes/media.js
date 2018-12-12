@@ -496,7 +496,7 @@ function updateScore(array, newScore) {
 
     //Calculate the average of all the scores
     let final = Math.round(((total/size) * 100) / 100);
-    return total;
+    return final;
 }
 
 //Helper function for random media picker
