@@ -492,7 +492,7 @@ function updateScore(array, newScore) {
 
     //Get the data needed the calculate the average
     let size = array.length +=1;
-    let total = parseFloat(totalScore + newScore);
+    let total = totalScore + parseFloat(newScore);
 
     //Calculate the average of all the scores
     let final = Math.round(((total/size) * 100) / 100);
