@@ -37,17 +37,13 @@ UsersSchema.methods.validatePassword = function(password) {
 };
 
 //Unused token generation code, planning to use this in the second part of the assignment
-/*
+
 //Method that generates a JsonWebToken
 UsersSchema.methods.generateJWT = function() {
-    const today = new Date();
-    const expirationDate = new Date(today);
-    expirationDate.setDate(today.getDate() + 60);
-
     return jwt.sign({
         email: this.email,
         id: this._id,
-        exp: parseInt(expirationDate.getTime() / 1000, 10),
+        exp: parseInt(Math.floor(Date.now() / 1000) + (60 * 60), 10),
     }, 'secret');
 };
 
@@ -58,5 +54,5 @@ UsersSchema.methods.toAuthJSON = function() {
         token: this.generateJWT(),
     };
 };
-*/
+
 module.exports = mongoose.model('User', UsersSchema);

@@ -32,6 +32,7 @@ app.get('/media/games', media.findAllGames);
 app.get('/media/movies', media.findAllMovies);
 app.get('/user', usersRouter.findAll);
 app.post('/user/signin', usersRouter.signIn);
+app.post('/user/auth', usersRouter.authToken);
 app.get('/media/findUserMedia/:userId', media.searchMediaByUser);
 app.get('/media/findUserReview/:userId', media.searchReviewByUser);
 app.get('/user/findUserName/:userId', usersRouter.findOne);

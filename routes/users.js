@@ -3,6 +3,7 @@ let User = require('../models/users');
 let mongodbUri = "mongodb://DMacklin:watchthis1@ds149855.mlab.com:49855/movies";
 let router = express.Router();
 let mongoose = require('mongoose');
+let jwt = require('jsonwebtoken');
 
 mongoose.connect(mongodbUri);
 let db = mongoose.connection;
@@ -114,7 +115,8 @@ router.signIn = (req, res) =>{
                         found = true;
                         //If the password check returns true display the user
                         //This is where token generation will take place when implmented
-                        return res.send(JSON.stringify(users[i]),null,5);
+                        token = users[i].generateJWT();
+                        return res.send(JSON.stringify({userData: users[i], token: token}), null, 5);
                     }
                     else {
                         found = true;
@@ -129,6 +131,16 @@ router.signIn = (req, res) =>{
     });
 };
 
+router.authToken = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
+    jwt.verify(req.body.token, 'secret', function (err, decoded) {
+        if(err){
+            return res.send("Invalid Token");
+        } else {
+            return res.send(decoded)
+        }
+    })
+};
 //Method to update user name
 router.updateUserName = (req, res) =>{
     res.setHeader('Content-Type', 'application/json');
