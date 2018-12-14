@@ -141,6 +141,7 @@ router.authToken = (req, res) =>{
         }
     })
 };
+
 //Method to update user name
 router.updateUserName = (req, res) =>{
     res.setHeader('Content-Type', 'application/json');
@@ -169,7 +170,7 @@ router.updateUserName = (req, res) =>{
     });
 };
 
-router.findOne = (req,res) =>{
+router.getUserName = (req,res) =>{
     res.setHeader('Content-Type', 'application/json');
     User.findById(req.params.userId, function (err, user) {
         if(err) {
@@ -180,5 +181,17 @@ router.findOne = (req,res) =>{
         }
     });
 };
+
+router.findOne = (req, res) =>{
+    res.setHeader('Content-Type', 'application/json');
+    User.findById(req.params.userId, function (err, user) {
+        if(err) {
+            return res.send(err);
+        }
+        else {
+            return res.send(user)
+        }
+    });
+}
 
 module.exports = router;
