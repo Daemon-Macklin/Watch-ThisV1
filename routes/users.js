@@ -189,7 +189,7 @@ router.findOne = (req, res) =>{
             return res.send(err);
         }
         else {
-            return res.send(user)
+            return res.send(JSON.stringify(user,null,5))
         }
     });
 }
