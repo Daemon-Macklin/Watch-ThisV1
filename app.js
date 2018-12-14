@@ -42,7 +42,7 @@ app.get('/media/:type/pickRandomMedia', media.pickRandomMedia);
 app.get('/media/searchByGenre/:genre', media.searchByGenre);
 app.get('/media/searchByTitle/:title', media.searchByTitle);
 app.get('/media/:id', media.findOne);
-app.get('/media/:id', usersRouter.findOne);
+app.get('/user/:id', usersRouter.findOne);
 app.get('/media/searchByRating/:rating', media.searchByRating);
 app.delete('/media/:id/removeMedia', media.deleteMedia);
 app.put('/media/:id/updateTitle', media.updateTitle);
