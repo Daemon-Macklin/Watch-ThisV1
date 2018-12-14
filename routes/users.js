@@ -184,7 +184,7 @@ router.getUserName = (req,res) =>{
 
 router.findOne = (req, res) =>{
     res.setHeader('Content-Type', 'application/json');
-    User.findById(req.params.userId, function (err, user) {
+    User.findById(req.params.id, function (err, user) {
         if(err) {
             return res.send(err);
         }
