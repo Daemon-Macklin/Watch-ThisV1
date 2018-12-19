@@ -1,3 +1,67 @@
+GET http://localhost:3000/getStats
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndlYm1hbkBob3RtYWlsLmNvbSIsImlkIjoiNWMxM2M2YWFkNDcwNWQxZjU5MmVlNGM4IiwiZXhwIjoxNTQ0ODAxMjAzLCJpYXQiOjE1NDQ4MDExNDN9.wqqdSlUNVWeu_zoLsWA3p1A5zex1ChiQJ7_onzPqfC0"}
+
+<> 2018-12-19T110443.200.json
+
+###
+
+GET http://localhost:3000/getStats
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndlYm1hbkBob3RtYWlsLmNvbSIsImlkIjoiNWMxM2M2YWFkNDcwNWQxZjU5MmVlNGM4IiwiZXhwIjoxNTQ0ODAxMjAzLCJpYXQiOjE1NDQ4MDExNDN9.wqqdSlUNVWeu_zoLsWA3p1A5zex1ChiQJ7_onzPqfC0"}
+
+<> 2018-12-19T110158.200.json
+
+###
+
+GET http://localhost:3000/getStats
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndlYm1hbkBob3RtYWlsLmNvbSIsImlkIjoiNWMxM2M2YWFkNDcwNWQxZjU5MmVlNGM4IiwiZXhwIjoxNTQ0ODAxMjAzLCJpYXQiOjE1NDQ4MDExNDN9.wqqdSlUNVWeu_zoLsWA3p1A5zex1ChiQJ7_onzPqfC0"}
+
+###
+
+GET http://localhost:3000/getStats
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndlYm1hbkBob3RtYWlsLmNvbSIsImlkIjoiNWMxM2M2YWFkNDcwNWQxZjU5MmVlNGM4IiwiZXhwIjoxNTQ0ODAxMjAzLCJpYXQiOjE1NDQ4MDExNDN9.wqqdSlUNVWeu_zoLsWA3p1A5zex1ChiQJ7_onzPqfC0"}
+
+<> 2018-12-19T105524.200.json
+
+###
+
+GET http://localhost:3000/getHighestRating
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndlYm1hbkBob3RtYWlsLmNvbSIsImlkIjoiNWMxM2M2YWFkNDcwNWQxZjU5MmVlNGM4IiwiZXhwIjoxNTQ0ODAxMjAzLCJpYXQiOjE1NDQ4MDExNDN9.wqqdSlUNVWeu_zoLsWA3p1A5zex1ChiQJ7_onzPqfC0"}
+
+<> 2018-12-19T062716.200.json
+
+###
+
+GET http://localhost:3000/getHighestUpvote
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndlYm1hbkBob3RtYWlsLmNvbSIsImlkIjoiNWMxM2M2YWFkNDcwNWQxZjU5MmVlNGM4IiwiZXhwIjoxNTQ0ODAxMjAzLCJpYXQiOjE1NDQ4MDExNDN9.wqqdSlUNVWeu_zoLsWA3p1A5zex1ChiQJ7_onzPqfC0"}
+
+<> 2018-12-19T061656.200.json
+
+###
+
 POST http://localhost:3000/user/auth
 Accept: */*
 Cache-Control: no-cache
@@ -479,72 +543,6 @@ Content-Type: application/json
 {"reviewText":"a good movie", "score":"4"}
 
 <> 2018-10-27T071126.200.json
-
-###
-
-GET http://localhost:3000/media/Movie/pickRandomMedia
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-
-{"reviewText":"a good movie", "score":"4"}
-
-<> 2018-10-27T071124.200.json
-
-###
-
-GET http://localhost:3000/media/Movie/pickRandomMedia
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-
-{"reviewText":"a good movie", "score":"4"}
-
-<> 2018-10-27T071121.200.json
-
-###
-
-GET http://localhost:3000/media/Movie/pickRandomMedia
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-
-{"reviewText":"a good movie", "score":"4"}
-
-<> 2018-10-27T071115.200.json
-
-###
-
-GET http://localhost:3000/media/searchByTitle/the%20dark%20night
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-
-{"reviewText":"a good movie", "score":"4"}
-
-<> 2018-10-27T071039.200.json
-
-###
-
-GET http://localhost:3000/media/searchByGenre/Animation
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-
-{"reviewText":"a good movie", "score":"4"}
-
-<> 2018-10-27T071023.200.json
-
-###
-
-GET http://localhost:3000/media
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-
-{"reviewText":"a good movie", "score":"4"}
-
-<> 2018-10-27T070954.200.json
 
 ###
 

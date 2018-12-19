@@ -35,6 +35,7 @@ app.get('/getHighestUpvote', media.findMostUpvotes);
 app.get('/getHighestRating', media.findHighestRating);
 app.post('/user/signin', usersRouter.signIn);
 app.post('/user/auth', usersRouter.authToken);
+app.get('/getStats', media.getStats);
 app.get('/media/findUserMedia/:userId', media.searchMediaByUser);
 app.get('/media/findUserReview/:userId', media.searchReviewByUser);
 app.get('/user/findUserName/:userId', usersRouter.getUserName);

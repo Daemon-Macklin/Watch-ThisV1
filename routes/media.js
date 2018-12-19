@@ -412,6 +412,42 @@ router.findHighestRating = (req, res) => {
     })
 };
 
+router.getStats = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let numberOfMedia = 0;
+    let numberOfReviews = 0;
+    let numberOfGames = 0;
+    let numberOfMovies = 0;
+    let totalUpVotes = 0;
+    let averageMovieRating =  2.5;
+    Media.find(function(err, mediaCollection) {
+        if(err)
+            return res.send(err)
+        else{
+            totalUpVotes = getTotalVotes(mediaCollection);
+            for (let i = 0; i < mediaCollection.length; i+=1) {
+                if (mediaCollection[i].type === "Movie"){
+                    numberOfMovies += 1;
+                } else {
+                    numberOfGames +=1;
+                }
+                numberOfReviews += mediaCollection[i].reviews.length;
+                averageMovieRating += mediaCollection[i].rating;
+            }
+            numberOfMedia = numberOfMovies += numberOfGames;
+            averageMovieRating = Math.round((averageMovieRating/numberOfMedia) * 100 / 100);
+            let stats = {
+                totalMedia: numberOfMedia,
+                totalGames: numberOfGames,
+                totalMovies: numberOfMovies,
+                totalVotes: totalUpVotes,
+                totalReviews: numberOfReviews,
+                averageRating: averageMovieRating
+            }
+            return res.send(stats)
+        }
+    })
+};
 //Method to search media based on rating
 router.searchByRating = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -567,7 +603,7 @@ function getTotalVotes(array){
 
     //Loop through the array and loop through the reviews of that media
     for(let i =0; i < array.length; i+=1){
-        for(let j =0; j < array[j].reviews.length; j+=1){
+        for(let j =0; j < array[i].reviews.length; j+=1){
 
             //Add number of upvotes to total
             totalVotes += array[i].reviews[j].upvotes
