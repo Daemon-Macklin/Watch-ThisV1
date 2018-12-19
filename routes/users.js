@@ -151,9 +151,6 @@ router.updateUserName = (req, res) =>{
         }
         else{
 
-            //Authentication before changing password
-            if(user.email === req.body.email && user.validatePassword(req.body.password)){
-
                 //Mongoose function to find a user and update a part or parts of it given an id
                 User.findByIdAndUpdate(req.params.userId, {userName : req.body.newUserName}, function (err, user) {
                     if(err) {
@@ -163,9 +160,6 @@ router.updateUserName = (req, res) =>{
                         return res.send(JSON.stringify(user,null,5))
                     }
                 });
-            }else{
-                return res.send("Email or password incorrect");
-            }
         }
     });
 };
