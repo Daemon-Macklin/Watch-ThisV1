@@ -364,6 +364,53 @@ router.searchReviewByUser = (req, res) =>{
     });
 };
 
+router.findMostUpvotes = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let reviews = [];
+
+    media.find(function(err, medias) {
+        if (err)
+            return res.send(err);
+        else {
+            for (let i = 0; i < medias.length; i += 1)
+                for (let j = 0; j < medias[i].reviews.length; j += 1) {
+                    let review = {
+                        review: medias[i].reviews[j],
+                        mediaId: medias[i]._id
+                    }
+                    reviews.push(review)
+                }
+        }
+            let highest = reviews[0];
+            for (let i = 1; i < reviews.length; i+=1) {
+                if (highest.review.upvotes < reviews[i].review.upvotes){
+                    highest = reviews[i]
+                }
+            }
+            return res.send(highest)
+        })
+};
+
+router.findHighestRating = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    media.find(function(err, medias) {
+        if (err)
+            return res.send(err);
+        else {
+            let highest = medias[0]
+            for (let i = 0; i < medias.length; i+=1){
+                if (highest.rating < medias[i].rating){
+                    highest = medias[i]
+                } else if (highest.rating === medias[i].rating) {
+                    if (highest.reviews.length < medias[i].reviews.length){
+                        highest = medias[i]
+                    }
+                }
+            }
+            return res.send(highest)
+        }
+    })
+};
 
 //Method to search media based on rating
 router.searchByRating = (req, res) => {
