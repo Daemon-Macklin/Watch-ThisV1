@@ -346,7 +346,11 @@ router.searchReviewByUser = (req, res) =>{
 
                     //If the id match add it to the list of the reviews uploaded by the user
                     if(medias[i].reviews[j].userId===req.params.userId){
-                        found.push(medias[i].reviews[j]);
+                        let reviewData = {
+                            review: medias[i].reviews[j],
+                            mediaData: medias[i]._id
+                        }
+                        found.push(reviewData);
                     }
                 }
             }
