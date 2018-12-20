@@ -131,12 +131,19 @@ router.signIn = (req, res) =>{
     });
 };
 
+// Method to auth token
 router.authToken = (req, res) =>{
     res.setHeader('Content-Type', 'application/json');
+
+    // Use Json Web Token verify method to verify if token is valid
     jwt.verify(req.body.token, 'secret', function (err, decoded) {
         if(err){
+
+            // If it is invalid return invalid
             return res.send("Invalid Token");
         } else {
+
+            // else return the decoded token
             return res.send(decoded)
         }
     })

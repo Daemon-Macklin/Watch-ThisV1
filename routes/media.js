@@ -364,14 +364,18 @@ router.searchReviewByUser = (req, res) =>{
     });
 };
 
+// Method to find review with most upvotes
 router.findMostUpvotes = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let reviews = [];
 
+    // Get all of the media
     media.find(function(err, medias) {
         if (err)
             return res.send(err);
         else {
+
+            // Loop through each medias reviews and add them to an array
             for (let i = 0; i < medias.length; i += 1)
                 for (let j = 0; j < medias[i].reviews.length; j += 1) {
                     let review = {
@@ -381,6 +385,8 @@ router.findMostUpvotes = (req, res) => {
                     reviews.push(review)
                 }
         }
+
+            // Find the review with the highest upvotes
             let highest = reviews[0];
             for (let i = 1; i < reviews.length; i+=1) {
                 if (highest.review.upvotes < reviews[i].review.upvotes){
@@ -391,17 +397,23 @@ router.findMostUpvotes = (req, res) => {
         })
 };
 
+// method to find the media with the higest rating
 router.findHighestRating = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+
+    // Get all of the media
     media.find(function(err, medias) {
         if (err)
             return res.send(err);
         else {
+
+            // Loop through each media and find the media with the highest rating
             let highest = medias[0]
             for (let i = 0; i < medias.length; i+=1){
                 if (highest.rating < medias[i].rating){
                     highest = medias[i]
                 } else if (highest.rating === medias[i].rating) {
+                    // If a media have the same rating as the higest the one with more reviews is the higest
                     if (highest.reviews.length < medias[i].reviews.length){
                         highest = medias[i]
                     }
@@ -412,6 +424,7 @@ router.findHighestRating = (req, res) => {
     })
 };
 
+// Method to get stats
 router.getStats = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let numberOfMedia = 0;
@@ -420,11 +433,17 @@ router.getStats = (req, res) => {
     let numberOfMovies = 0;
     let totalUpVotes = 0;
     let averageMovieRating =  2.5;
+
+    // Get all media
     Media.find(function(err, mediaCollection) {
         if(err)
             return res.send(err)
         else{
+
+            // user helper function to get total upvotes
             totalUpVotes = getTotalVotes(mediaCollection);
+
+            // Loop through each media gathering stats
             for (let i = 0; i < mediaCollection.length; i+=1) {
                 if (mediaCollection[i].type === "Movie"){
                     numberOfMovies += 1;
@@ -434,8 +453,12 @@ router.getStats = (req, res) => {
                 numberOfReviews += mediaCollection[i].reviews.length;
                 averageMovieRating += mediaCollection[i].rating;
             }
+
+            // Calculate extra stats
             numberOfMedia = numberOfMovies += numberOfGames;
             averageMovieRating = Math.round((averageMovieRating/numberOfMedia) * 100 / 100);
+
+            // Create object of stats
             let stats = {
                 totalMedia: numberOfMedia,
                 totalGames: numberOfGames,
@@ -444,6 +467,8 @@ router.getStats = (req, res) => {
                 totalReviews: numberOfReviews,
                 averageRating: averageMovieRating
             }
+
+            // return object
             return res.send(stats)
         }
     })
